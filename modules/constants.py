@@ -4,6 +4,11 @@ O = 2
 L = 3
 J = 4
 
+# Default width board size in blocks
+# For now field is 1:2 ratio, later calculations expect that
+DEFAULT_WIDTH = 8
+DEFAULT_HEIGHT = DEFAULT_WIDTH * 2
+
 FIGURE_FORMS = {
     L: (
         (
