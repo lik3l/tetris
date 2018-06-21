@@ -9,6 +9,8 @@ J = 4
 DEFAULT_WIDTH = 8
 DEFAULT_HEIGHT = DEFAULT_WIDTH * 2
 
+SCREEN_SIZE = (640, 480)
+
 FIGURE_FORMS = {
     L: (
         (

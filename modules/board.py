@@ -13,9 +13,10 @@ class Board:
         else:
             # calc through height
             self.pixel_ratio = int(width / DEFAULT_WIDTH)
-        self.pixel_size = (width, height)
         self.width = DEFAULT_WIDTH
         self.height = DEFAULT_HEIGHT
+        self.pixel_size = (self.width * self.pixel_ratio,
+                           self.height * self.pixel_ratio)
         self.board = [[0 for dummy_w in range(self.width)] for dummy_h in range(self.height)]
 
     def __str__(self):
@@ -23,3 +24,7 @@ class Board:
 
     def is_available(self, x, y):
         return self.board[x][y] == 0
+
+    def get_pixel_size(self):
+        """ Return board size in pixels """
+        return self.pixel_size
