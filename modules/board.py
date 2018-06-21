@@ -18,6 +18,7 @@ class Board:
         self.pixel_size = (self.width * self.pixel_ratio,
                            self.height * self.pixel_ratio)
         self.board = [[0 for dummy_w in range(self.width)] for dummy_h in range(self.height)]
+        self.board[5][4] = 1  # for testing
 
     def __str__(self):
         return '\n'.join(str(x) for x in self.board)
@@ -28,3 +29,18 @@ class Board:
     def get_pixel_size(self):
         """ Return board size in pixels """
         return self.pixel_size
+
+    def print_board(self):
+        """ Returns represented board coords """
+        arr = []
+        for l_idx, line in enumerate(self.board):
+            for p_idx, pixel in enumerate(line):
+                if pixel:
+                    arr.append((
+                        p_idx * self.pixel_ratio,
+                        l_idx * self.pixel_ratio,
+                        self.pixel_ratio,
+                        self.pixel_ratio
+                    ))
+        return arr
+
