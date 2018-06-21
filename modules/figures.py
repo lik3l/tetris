@@ -23,8 +23,13 @@ class Figure:
         self.state = self.figure[self.position]
 
     def rotate_left(self):
-        pass
+        if self.positions == 1:
+            return
+        elif self.position == 0:
+            self.position = self.positions - 1
+        else:
+            self.position -= 1
+        self.state = self.figure[self.position]
 
     def __str__(self):
         return '\n'.join(str(line) for line in self.state)
-
