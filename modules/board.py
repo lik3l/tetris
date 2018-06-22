@@ -176,10 +176,11 @@ class Board:
             self.set_board_position(*coords)
         full_lines = self.get_full()
         if full_lines:
-            # TODO: make them disapear
-            pass
+            for line_idx in full_lines:
+                self.board.pop(line_idx)
+                self.board.insert(0, [0] * self.width)
         self.make_random_figure()
 
     def get_full(self):
-        """ Returns full board lines """
+        """ Returns full board line ids """
         return [idx for idx, line in enumerate(self.board) if all(line)]
