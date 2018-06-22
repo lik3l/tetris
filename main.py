@@ -28,7 +28,7 @@ def main():
     pygame.time.set_timer(MOVEDOWN, 1000)
 
     while True:
-        input_handler(board)
+        input_handler(pygame, board)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
