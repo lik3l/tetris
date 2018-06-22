@@ -26,17 +26,27 @@ class Board:
         self.figure = Figure(Figure.get_random())
         self.starting_position = [int(self.width / 2) - int(self.figure.get_sprite_size() / 2),
                                   -self.figure.get_sprite_size()]
-        self.figure_position = list(self.starting_position)
+        self.figure_position = self.get_starting_position()
 
     def __str__(self):
         return '\n'.join(str(x) for x in self.board)
 
     def is_available(self, x, y):
-        return self.board[x][y] == 0
+        print(self.width, x)
+        print(self.height, y)
+        if self.width > x >= 0 and self.height > y:
+            return self.board[y][x] == 0
+        else:
+            # Index out of range
+            return False
 
     def get_pixel_size(self):
         """ Return board size in pixels """
         return self.pixel_size
+
+    def get_starting_position(self):
+        """ Returns starting pos """
+        return list(self.starting_position)
 
     def print_board(self):
         """ Returns represented board coords """
@@ -80,7 +90,6 @@ class Board:
     def move_figure(self):
         """ Moving figure bottom """
         self.figure_position[1] += 1
-        self.check_collision()
 
     def speed_down(self):
         """ Speeds figure down """
@@ -88,12 +97,29 @@ class Board:
 
     def figure_left(self):
         """ Moves figure to the left """
-        self.figure_position[0] -= 1
+        if self.check_left():
+            self.figure_position[0] -= 1
 
     def figure_right(self):
         """ Moves figure to the right """
-        self.figure_position[0] += 1
+        if self.check_right():
+            self.figure_position[0] += 1
 
     def check_collision(self):
         """ Check collisions of figure object on board """
-        pass
+        self.check_left()
+
+    def check_left(self):
+        """ check left collisions """
+        for block in self.repr_figure_on_board():
+            print(block[0])
+            if block[0] <= 0 or not self.is_available(block[0] - 1, block[1]):
+                return False
+        return True
+
+    def check_right(self):
+        """ Check right collision """
+        for block in list(self.repr_figure_on_board()):
+            if not self.is_available(*block):
+                return False
+        return True
