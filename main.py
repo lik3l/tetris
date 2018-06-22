@@ -1,40 +1,46 @@
-import pygame, sys
-pygame.init()
-from modules.constants import Z, S, O, L, J
+import pygame
+from pygame.locals import USEREVENT
+import sys
+import modules.constants as c
+from time import sleep
 
+from modules.board import Board
+
+pygame.init()
 
 
 def main():
-    # size = width, height = 640, 480
+    size = c.SCREEN_SIZE
     # speed = [1, 1]
-    # black = 0, 0, 0
-    #
-    # screen = pygame.display.set_mode(size)
-    #
-    # ball = pygame.image.load("intro_ball.gif")
-    # ballrect = ball.get_rect()
-    #
-    # while 1:
-    #     for event in pygame.event.get():
-    #         if event.type == pygame.QUIT:
-    #             sys.exit()
-    #
-    #     ballrect = ballrect.move(speed)
-    #     if ballrect.left < 0 or ballrect.right > width:
-    #         speed[0] = -speed[0]
-    #     if ballrect.top < 0 or ballrect.bottom > height:
-    #         speed[1] = -speed[1]
-    #
-    #     screen.fill(black)
-    #     screen.blit(ball, ballrect)
-    #     pygame.display.flip()
+    black = 0, 0, 0
+    white = 255, 255, 255
 
-    from modules.figures import Figure
-    f = Figure(L)
-    print(f)
-    f.rotate_right()
-    print()
-    print(f)
+    board = Board(*size)
+    board_rect = pygame.Rect((0, 0, *size))
+
+    screen = pygame.display.set_mode(size)
+    board_surf = screen.subsurface(board_rect)
+
+    # events
+    MOVEDOWN = USEREVENT+2
+    pygame.time.set_timer(MOVEDOWN, 1000)
+
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                sys.exit()
+            if event.type == MOVEDOWN:
+                board.move_figure()
+            if event.type == pygame.KEYDOWN:
+                print('KEYDOWN')
+
+        screen.fill(black)
+        # pygame.draw.rect(screen, white, (0, 0, *board.get_pixel_size()), 1)
+        for coords in board.print_board():
+            pygame.draw.rect(board_surf, white, coords)
+        for coords in board.print_figure():
+            pygame.draw.rect(board_surf, white, coords)
+        pygame.display.flip()
 
 
 if __name__ == '__main__':

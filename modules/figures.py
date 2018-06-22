@@ -13,6 +13,10 @@ class Figure:
         self.positions = len(self.figure)
         self.state = self.figure[self.position]
 
+    def get_sprite_size(self):
+        """ Returns sprite size, assuming sprite is square """
+        return len(self.state)
+
     def rotate_right(self):
         """ Switch positions from figure positions list """
         # Means only one position no need in switching
@@ -34,6 +38,7 @@ class Figure:
         self.state = self.figure[self.position]
 
     def get_state(self):
+        """ Returns figure current state """
         return self.state
 
     @staticmethod

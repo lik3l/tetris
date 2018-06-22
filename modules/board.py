@@ -19,11 +19,13 @@ class Board:
         self.height = DEFAULT_HEIGHT
         self.pixel_size = (self.width * self.pixel_ratio,
                            self.height * self.pixel_ratio)
-        self.starting_position = [int(self.width / 2) - 2, 0]
 
         self.board = [[0 for dummy_w in range(self.width)] for dummy_h in range(self.height)]
         self.state = True
+
         self.figure = Figure(Figure.get_random())
+        self.starting_position = [int(self.width / 2) - int(self.figure.get_sprite_size() / 2),
+                                  -self.figure.get_sprite_size()]
         self.figure_position = list(self.starting_position)
 
     def __str__(self):
