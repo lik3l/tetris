@@ -40,6 +40,13 @@ class Board:
             # Index out of range
             return False
 
+    def check_figure(self, figure):
+        """ Checks figure aviability """
+        for coords in figure:
+            if not self.is_available(*coords):
+                return False
+        return True
+
     def rotate_right(self):
         """ Checks and rotates figure """
         if self.check_rotate('right'):
@@ -156,18 +163,12 @@ class Board:
             repr_fig = self.repr_figure_on_board(
                 figure=self.figure.get_next_left()
             )
-            for coords in repr_fig:
-                if not self.is_available(*coords):
-                    return False
-            return True
+            return self.check_figure(repr_fig)
         else:
             repr_fig = self.repr_figure_on_board(
                 figure=self.figure.get_next_right()
             )
-            for coords in repr_fig:
-                if not self.is_available(*coords):
-                    return False
-            return True
+            return self.check_figure(repr_fig)
 
     def stack_figure(self):
         """ Stacks figure on board """
