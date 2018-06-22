@@ -42,11 +42,13 @@ class Board:
 
     def rotate_right(self):
         """ Checks and rotates figure """
-        self.figure.rotate_right()
+        if self.check_rotate('right'):
+            self.figure.rotate_right()
 
     def rotate_left(self):
         """ Checks and rotates figure """
-        self.figure.rotate_left()
+        if self.check_rotate('left'):
+            self.figure.rotate_left()
 
     def set_board_position(self, x, y):
         """ Sets block in position as used """
@@ -79,10 +81,13 @@ class Board:
                     ))
         return arr
 
-    def repr_figure_on_board(self):
+    def repr_figure_on_board(self, **kwargs):
         """ Represents figure coordinates on board """
+        figure = self.figure.get_state()
+        if kwargs.get('figure'):
+            figure = kwargs['figure']
         arr = []
-        for l_idx, line in enumerate(self.figure.get_state()):
+        for l_idx, line in enumerate(figure):
             for p_idx, pixel in enumerate(line):
                 if pixel:
                     arr.append([
@@ -145,9 +150,24 @@ class Board:
                 return False
         return True
 
-    def check_rotate(self):
-        """ Check rotate aviability """
-        pass
+    def check_rotate(self, path):
+        """ Check rotate availability """
+        if path == 'left':
+            repr_fig = self.repr_figure_on_board(
+                figure=self.figure.get_next_left()
+            )
+            for coords in repr_fig:
+                if not self.is_available(*coords):
+                    return False
+            return True
+        else:
+            repr_fig = self.repr_figure_on_board(
+                figure=self.figure.get_next_right()
+            )
+            for coords in repr_fig:
+                if not self.is_available(*coords):
+                    return False
+            return True
 
     def stack_figure(self):
         """ Stacks figure on board """

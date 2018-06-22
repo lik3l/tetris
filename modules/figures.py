@@ -24,6 +24,12 @@ class Figure:
         else:
             return 0
 
+    def get_next_left(self):
+        return self.figure[self.next_left()]
+
+    def get_next_right(self):
+        return self.figure[self.next_right()]
+
     def next_left(self):
         """ Returns next left position """
         if self.positions == 1:
