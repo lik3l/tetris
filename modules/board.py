@@ -1,5 +1,7 @@
 from .constants import DEFAULT_WIDTH, DEFAULT_HEIGHT
 
+from .figures import Figure
+
 
 class Board:
     """
@@ -17,8 +19,12 @@ class Board:
         self.height = DEFAULT_HEIGHT
         self.pixel_size = (self.width * self.pixel_ratio,
                            self.height * self.pixel_ratio)
+        self.starting_position = [int(self.width / 2) - 2, 0]
+
         self.board = [[0 for dummy_w in range(self.width)] for dummy_h in range(self.height)]
-        self.board[5][4] = 1  # for testing
+        self.state = True
+        self.figure = Figure(Figure.get_random())
+        self.figure_position = list(self.starting_position)
 
     def __str__(self):
         return '\n'.join(str(x) for x in self.board)
@@ -43,4 +49,22 @@ class Board:
                         self.pixel_ratio
                     ))
         return arr
+
+    def print_figure(self):
+        """ Return represented figure coords """
+        arr = []
+        for l_idx, line in enumerate(self.figure.get_state()):
+            for p_idx, pixel in enumerate(line):
+                if pixel:
+                    arr.append((
+                        (self.figure_position[0] + p_idx) * self.pixel_ratio,
+                        (self.figure_position[1] + l_idx) * self.pixel_ratio,
+                        self.pixel_ratio, self.pixel_ratio
+                    ))
+        return arr
+
+    def move_figure(self):
+        """ Moving figure bottom """
+        self.figure_position[1] += 1
+
 

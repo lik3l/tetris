@@ -1,10 +1,12 @@
-from .constants import FIGURE_FORMS
+from .constants import FIGURE_FORMS, FIGURE_TYPES
+from random import choice
 
 
 class Figure:
     """
     Base figure model used to describe figure and it's moves
     """
+
     def __init__(self, figure):
         self.figure = FIGURE_FORMS[figure]
         self.position = 0
@@ -30,6 +32,13 @@ class Figure:
         else:
             self.position -= 1
         self.state = self.figure[self.position]
+
+    def get_state(self):
+        return self.state
+
+    @staticmethod
+    def get_random():
+        return choice(FIGURE_TYPES)
 
     def __str__(self):
         return '\n'.join(str(line) for line in self.state)

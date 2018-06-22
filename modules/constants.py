@@ -4,6 +4,8 @@ O = 2
 L = 3
 J = 4
 
+FIGURE_TYPES = [Z, S, O, L, J]
+
 # Default width board size in blocks
 # For now field is 1:2 ratio, later calculations expect that
 DEFAULT_WIDTH = 8
