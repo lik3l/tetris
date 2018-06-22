@@ -3,8 +3,9 @@ S = 1
 O = 2
 L = 3
 J = 4
+I = 5
 
-FIGURE_TYPES = [Z, S, O, L, J]
+FIGURE_TYPES = [Z, S, O, L, J, I]
 
 # Default width board size in blocks
 # For now field is 1:2 ratio, later calculations expect that
@@ -99,6 +100,20 @@ FIGURE_FORMS = {
             (0, 0, 0, 0),
             (0, 1, 1, 0),
             (0, 1, 1, 0),
+            (0, 0, 0, 0),
+        ),
+    ),
+    I: (
+        (
+            (0, 0, 1, 0),
+            (0, 0, 1, 0),
+            (0, 0, 1, 0),
+            (0, 0, 1, 0),
+        ),
+        (
+            (0, 0, 0, 0),
+            (0, 0, 0, 0),
+            (1, 1, 1, 1),
             (0, 0, 0, 0),
         ),
     )
