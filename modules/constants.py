@@ -7,6 +7,9 @@ I = 5
 
 FIGURE_TYPES = [Z, S, O, L, J, I]
 
+LINE_COST = 10
+MULTI_LINE_MULTIPLIER = 2
+
 # Default width board size in blocks
 # For now field is 1:2 ratio, later calculations expect that
 DEFAULT_WIDTH = 8
