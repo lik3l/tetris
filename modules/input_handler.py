@@ -16,3 +16,11 @@ def input_handler(pygame, board):
         board.speed_down()
         pygame.display.flip()
         time.sleep(.2)
+    if pressed[c.K_SPACE]:
+        board.figure.rotate_right()
+        pygame.display.flip()
+        time.sleep(.2)
+    if pressed[c.K_LALT]:
+        board.figure.rotate_left()
+        pygame.display.flip()
+        time.sleep(.2)

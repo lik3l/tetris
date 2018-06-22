@@ -52,22 +52,35 @@ class Board:
                     ))
         return arr
 
-    def print_figure(self):
-        """ Return represented figure coords """
+    def repr_figure_on_board(self):
+        """ Represents figure coordinates on board """
         arr = []
         for l_idx, line in enumerate(self.figure.get_state()):
             for p_idx, pixel in enumerate(line):
                 if pixel:
-                    arr.append((
-                        (self.figure_position[0] + p_idx) * self.pixel_ratio,
-                        (self.figure_position[1] + l_idx) * self.pixel_ratio,
-                        self.pixel_ratio, self.pixel_ratio
-                    ))
+                    arr.append([
+                        self.figure_position[0] + p_idx,
+                        self.figure_position[1] + l_idx
+                    ])
         return arr
+
+    def print_figure(self):
+        """ Return represented figure coords """
+        arr = list(self.repr_figure_on_board())
+        return [
+            [
+                pos[0] * self.pixel_ratio,
+                pos[1] * self.pixel_ratio,
+                self.pixel_ratio,
+                self.pixel_ratio
+            ]
+            for pos in self.repr_figure_on_board()
+        ]
 
     def move_figure(self):
         """ Moving figure bottom """
         self.figure_position[1] += 1
+        self.check_collision()
 
     def speed_down(self):
         """ Speeds figure down """
@@ -80,3 +93,7 @@ class Board:
     def figure_right(self):
         """ Moves figure to the right """
         self.figure_position[0] += 1
+
+    def check_collision(self):
+        """ Check collisions of figure object on board """
+        pass
