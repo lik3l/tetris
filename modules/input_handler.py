@@ -6,8 +6,13 @@ def input_handler(pygame, board):
     pressed = pygame.key.get_pressed()
     if pressed[c.K_LEFT]:
         board.figure_left()
-        
-        time.sleep(.4)
-        print('left')
+        pygame.display.flip()
+        time.sleep(.2)
     if pressed[c.K_RIGHT]:
-        print('right')
+        board.figure_right()
+        pygame.display.flip()
+        time.sleep(.2)
+    if pressed[c.K_DOWN]:
+        board.speed_down()
+        pygame.display.flip()
+        time.sleep(.2)

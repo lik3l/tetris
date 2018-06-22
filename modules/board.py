@@ -69,6 +69,10 @@ class Board:
         """ Moving figure bottom """
         self.figure_position[1] += 1
 
+    def speed_down(self):
+        """ Speeds figure down """
+        self.figure_position[1] += 1
+
     def figure_left(self):
         """ Moves figure to the left """
         self.figure_position[0] -= 1
