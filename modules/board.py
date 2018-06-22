@@ -40,6 +40,14 @@ class Board:
             # Index out of range
             return False
 
+    def rotate_right(self):
+        """ Checks and rotates figure """
+        self.figure.rotate_right()
+
+    def rotate_left(self):
+        """ Checks and rotates figure """
+        self.figure.rotate_left()
+
     def set_board_position(self, x, y):
         """ Sets block in position as used """
         self.board[y][x] = 1
@@ -136,6 +144,10 @@ class Board:
                 self.stack_figure()
                 return False
         return True
+
+    def check_rotate(self):
+        """ Check rotate aviability """
+        pass
 
     def stack_figure(self):
         """ Stacks figure on board """

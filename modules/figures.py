@@ -17,24 +17,30 @@ class Figure:
         """ Returns sprite size, assuming sprite is square """
         return len(self.state)
 
+    def next_right(self):
+        """ Returns next right position """
+        if self.positions > self.position + 1:
+            return self.position + 1
+        else:
+            return 0
+
+    def next_left(self):
+        """ Returns next left position """
+        if self.positions == 1:
+            return 0
+        elif self.position == 0:
+            return self.positions - 1
+        else:
+            return self.position - 1
+
     def rotate_right(self):
         """ Switch positions from figure positions list """
         # Means only one position no need in switching
-        if self.positions == 1:
-            return
-        elif self.positions > self.position + 1:
-            self.position += 1
-        else:
-            self.position = 0
+        self.position = self.next_right()
         self.state = self.figure[self.position]
 
     def rotate_left(self):
-        if self.positions == 1:
-            return
-        elif self.position == 0:
-            self.position = self.positions - 1
-        else:
-            self.position -= 1
+        self.position = self.next_left()
         self.state = self.figure[self.position]
 
     def get_state(self):
