@@ -32,7 +32,6 @@ class Board:
         return '\n'.join(str(x) for x in self.board)
 
     def is_available(self, x, y):
-        print(self)
         if self.width > x >= 0 and self.height > y >= 0:
             return self.board[y][x] == 0
         elif y < 0:
@@ -126,7 +125,7 @@ class Board:
     def check_right(self):
         """ Check right collision """
         for block in list(self.repr_figure_on_board()):
-            if not self.is_available(block[0], block[1] + 1):
+            if not self.is_available(block[0] + 1, block[1]):
                 return False
         return True
 
