@@ -76,7 +76,6 @@ class Board:
 
     def print_figure(self):
         """ Return represented figure coords """
-        arr = list(self.repr_figure_on_board())
         return [
             [
                 pos[0] * self.pixel_ratio,
