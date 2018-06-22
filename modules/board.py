@@ -24,23 +24,35 @@ class Board:
         self.state = True
 
         self.figure = Figure(Figure.get_random())
-        self.starting_position = [int(self.width / 2) - int(self.figure.get_sprite_size() / 2),
-                                  -self.figure.get_sprite_size()]
+        self.starting_position = (int(self.width / 2) - int(self.figure.get_sprite_size() / 2),
+                                  -self.figure.get_sprite_size())
         self.figure_position = self.get_starting_position()
 
     def __str__(self):
         return '\n'.join(str(x) for x in self.board)
 
     def is_available(self, x, y):
-        if self.width > x >= 0 and self.height > y:
+        print(self)
+        if self.width > x >= 0 and self.height > y >= 0:
             return self.board[y][x] == 0
+        elif y < 0:
+            return True
         else:
             # Index out of range
             return False
 
+    def set_board_position(self, x, y):
+        """ Sets block in position as used """
+        self.board[y][x] = 1
+
     def get_pixel_size(self):
         """ Return board size in pixels """
         return self.pixel_size
+
+    def make_random_figure(self):
+        """ Makes random figure """
+        self.figure = Figure(Figure.get_random())
+        self.figure_position = self.get_starting_position()
 
     def get_starting_position(self):
         """ Returns starting pos """
@@ -104,14 +116,9 @@ class Board:
         if self.check_right():
             self.figure_position[0] += 1
 
-    def check_collision(self):
-        """ Check collisions of figure object on board """
-        self.check_left()
-
     def check_left(self):
         """ check left collisions """
         for block in self.repr_figure_on_board():
-            print(block[0])
             if not self.is_available(block[0] - 1, block[1]):
                 return False
         return True
@@ -124,8 +131,15 @@ class Board:
         return True
 
     def check_bottom(self):
-        """ Check bottom colision """
+        """ Check bottom collision """
         for block in list(self.repr_figure_on_board()):
             if not self.is_available(block[0], block[1]+1):
+                self.stack_figure()
                 return False
         return True
+
+    def stack_figure(self):
+        """ Stacks figure on board """
+        for coords in self.repr_figure_on_board():
+            self.set_board_position(*coords)
+            self.make_random_figure()
