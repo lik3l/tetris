@@ -31,6 +31,10 @@ class Board:
     def __str__(self):
         return '\n'.join(str(x) for x in self.board)
 
+    def get_game_state(self):
+        """ Returns True if game is running """
+        return self.state
+
     def is_available(self, x, y):
         if self.width > x >= 0 and self.height > y >= 0:
             return self.board[y][x] == 0
@@ -175,6 +179,9 @@ class Board:
         for coords in self.repr_figure_on_board():
             self.set_board_position(*coords)
         self.remove_lines(self.get_full())
+        if self.check_endgame():
+            self.state = False
+            return
         self.make_random_figure()
 
     def get_full(self):
@@ -182,6 +189,11 @@ class Board:
         return [idx for idx, line in enumerate(self.board) if all(line)]
 
     def remove_lines(self, lines):
+        """ Remove lines by line id """
         for line_idx in lines:
             self.board.pop(line_idx)
             self.board.insert(0, [0] * self.width)
+
+    def check_endgame(self):
+        """ Returns True if game over """
+        return any(self.board[0])
