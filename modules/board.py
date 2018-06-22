@@ -174,13 +174,14 @@ class Board:
         """ Stacks figure on board """
         for coords in self.repr_figure_on_board():
             self.set_board_position(*coords)
-        full_lines = self.get_full()
-        if full_lines:
-            for line_idx in full_lines:
-                self.board.pop(line_idx)
-                self.board.insert(0, [0] * self.width)
+        self.remove_lines(self.get_full())
         self.make_random_figure()
 
     def get_full(self):
         """ Returns full board line ids """
         return [idx for idx, line in enumerate(self.board) if all(line)]
+
+    def remove_lines(self, lines):
+        for line_idx in lines:
+            self.board.pop(line_idx)
+            self.board.insert(0, [0] * self.width)
