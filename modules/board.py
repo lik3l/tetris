@@ -32,8 +32,6 @@ class Board:
         return '\n'.join(str(x) for x in self.board)
 
     def is_available(self, x, y):
-        print(self.width, x)
-        print(self.height, y)
         if self.width > x >= 0 and self.height > y:
             return self.board[y][x] == 0
         else:
@@ -88,11 +86,13 @@ class Board:
 
     def move_figure(self):
         """ Moving figure bottom """
-        self.figure_position[1] += 1
+        if self.check_bottom():
+            self.figure_position[1] += 1
 
     def speed_down(self):
         """ Speeds figure down """
-        self.figure_position[1] += 1
+        if self.check_bottom():
+            self.figure_position[1] += 1
 
     def figure_left(self):
         """ Moves figure to the left """
@@ -112,13 +112,20 @@ class Board:
         """ check left collisions """
         for block in self.repr_figure_on_board():
             print(block[0])
-            if block[0] <= 0 or not self.is_available(block[0] - 1, block[1]):
+            if not self.is_available(block[0] - 1, block[1]):
                 return False
         return True
 
     def check_right(self):
         """ Check right collision """
         for block in list(self.repr_figure_on_board()):
-            if not self.is_available(*block):
+            if not self.is_available(block[0], block[1] + 1):
+                return False
+        return True
+
+    def check_bottom(self):
+        """ Check bottom colision """
+        for block in list(self.repr_figure_on_board()):
+            if not self.is_available(block[0], block[1]+1):
                 return False
         return True
