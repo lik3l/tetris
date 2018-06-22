@@ -1,8 +1,10 @@
 import pygame
-from pygame.locals import USEREVENT
+from pygame.locals import (
+    USEREVENT,
+)
 import sys
 import modules.constants as c
-from time import sleep
+from modules.input_handler import input_handler
 
 from modules.board import Board
 
@@ -26,13 +28,13 @@ def main():
     pygame.time.set_timer(MOVEDOWN, 1000)
 
     while True:
+        input_handler(board)
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
             if event.type == MOVEDOWN:
                 board.move_figure()
-            if event.type == pygame.KEYDOWN:
-                print('KEYDOWN')
 
         screen.fill(black)
         # pygame.draw.rect(screen, white, (0, 0, *board.get_pixel_size()), 1)

@@ -69,4 +69,10 @@ class Board:
         """ Moving figure bottom """
         self.figure_position[1] += 1
 
+    def figure_left(self):
+        """ Moves figure to the left """
+        self.figure_position[0] -= 1
 
+    def figure_right(self):
+        """ Moves figure to the right """
+        self.figure_position[0] += 1
