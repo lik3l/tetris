@@ -195,6 +195,10 @@ class Board:
         """ Increases score """
         self.score += count ** c.MULTI_LINE_MULTIPLIER * c.LINE_COST
 
+    def get_score(self):
+        """ Returns score int """
+        return self.score
+
     def remove_lines(self, lines):
         """ Remove lines by line id """
         for line_idx in lines:

@@ -27,6 +27,8 @@ def main():
     MOVEDOWN = USEREVENT+2
     pygame.time.set_timer(MOVEDOWN, 1000)
 
+    myfont = pygame.font.SysFont("monospace", 16)
+
     while True:
         input_handler(pygame, board)
 
@@ -42,6 +44,8 @@ def main():
                 pygame.draw.rect(board_surf, white, coords)
             for coords in board.print_figure():
                 pygame.draw.rect(board_surf, white, coords)
+            scoretext = myfont.render("Score {0}".format(board.get_score()), 1, white)
+            screen.blit(scoretext, (5, 10))
             pygame.display.flip()
 
 
