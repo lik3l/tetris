@@ -1,4 +1,4 @@
-from .constants import FIGURE_FORMS, FIGURE_TYPES
+from .constants import FIGURE_FORMS, FIGURE_TYPES, COLORS
 from random import choice
 
 
@@ -12,6 +12,7 @@ class Figure:
         self.position = 0
         self.positions = len(self.figure)
         self.state = self.figure[self.position]
+        self.color = choice(COLORS)
 
     def get_sprite_size(self):
         """ Returns sprite size, assuming sprite is square """
@@ -52,6 +53,9 @@ class Figure:
     def get_state(self):
         """ Returns figure current state """
         return self.state
+
+    def get_color(self):
+        return self.color
 
     @staticmethod
     def get_random():

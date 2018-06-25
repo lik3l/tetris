@@ -1,5 +1,4 @@
 from json import loads
-from pygame import locals as c
 
 
 def write_end_text(screen, text_list, size):

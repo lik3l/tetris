@@ -44,7 +44,7 @@ def main():
             for coords in board.print_board():
                 pygame.draw.rect(board_surf, white, coords)
             for coords in board.print_figure():
-                pygame.draw.rect(board_surf, white, coords)
+                pygame.draw.rect(board_surf, board.figure.get_color(), coords)
             scoretext = myfont.render(board.score.get_score(), 1, white)
             screen.blit(scoretext, (5, 10))
             pygame.display.flip()
@@ -55,10 +55,10 @@ def main():
             write_end_text(screen, text, size)
 
             for event in pygame.event.get():
-                if event.type == pygame.KEYDOWN:
-                    if event.type == pygame.QUIT:
-                        sys.exit()
-                    elif event.key == pygame.K_RETURN:
+                if event.type == pygame.QUIT:
+                    sys.exit()
+                elif event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_RETURN:
                         board.score.write_top_score()
                         board.end_score_state()
                     else:

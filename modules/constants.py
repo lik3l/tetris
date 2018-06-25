@@ -10,6 +10,16 @@ FIGURE_TYPES = [Z, S, O, L, J, I, W]
 
 DEFAULT_SPEED = 1000
 
+COLORS = (
+    (255, 255, 255),
+    (50, 255, 255),
+    (255, 50, 255),
+    (255, 255, 50),
+    (50, 50, 255),
+    (255, 50, 50),
+    (50, 255, 50),
+)
+
 LINE_COST = 10
 MULTI_LINE_MULTIPLIER = 2
 
