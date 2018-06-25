@@ -66,7 +66,13 @@ class Board:
 
     def set_board_position(self, x, y):
         """ Sets block in position as used """
-        self.board[y][x] = 1
+        try:
+            self.board[y][x] = 1
+        except IndexError:
+            print(self)
+            print(self.repr_figure_on_board())
+            print(x, y)
+            # TODO: Catch error
 
     def get_pixel_size(self):
         """ Return board size in pixels """
