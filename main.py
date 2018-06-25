@@ -56,7 +56,7 @@ def main():
             # Screen half minus text half to center text
             screen.blit(scoretext, tuple(map(
                 sub,
-                tuple(map(floordiv, screen, half)),
+                tuple(map(floordiv, size, half)),
                 tuple(map(floordiv, text_size, half))
             )))
 
