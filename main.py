@@ -1,11 +1,10 @@
-import pygame
-from pygame.locals import (
-    USEREVENT,
-)
 import sys
+
+import pygame
+from pygame.locals import USEREVENT
+
 import modules.constants as c
 from modules.input_handler import input_handler
-
 from modules.board import Board
 from modules.helpers import write_end_text, enter_player_name
 
