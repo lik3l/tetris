@@ -1,3 +1,4 @@
+from operator import floordiv, sub
 import pygame
 from pygame.locals import (
     USEREVENT,
@@ -14,6 +15,7 @@ pygame.init()
 def main():
     size = c.SCREEN_SIZE
     speed = c.DEFAULT_SPEED
+    half = (2, 2)
     black = 0, 0, 0
     white = 255, 255, 255
 
@@ -47,6 +49,16 @@ def main():
             scoretext = myfont.render("Score {0}".format(board.get_score()), 1, white)
             screen.blit(scoretext, (5, 10))
             pygame.display.flip()
+        else:
+            screen.fill(black)
+            scoretext = myfont.render("Your score is {0}".format(board.get_score()), 1, white)
+            text_size = scoretext.get_size()
+            # Screen half minus text half to center text
+            screen.blit(scoretext, tuple(map(
+                sub,
+                tuple(map(floordiv, screen, half)),
+                tuple(map(floordiv, text_size, half))
+            )))
 
 
 if __name__ == '__main__':
