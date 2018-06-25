@@ -57,6 +57,8 @@ def main():
             text_list.append(myfont.render("Game over", 1, white))
             text_list.append(myfont.render(board.score.get_score_end(), 1, white))
 
+            board.score.write_top_score()
+
             write_end_text(screen, text_list, size)
 
 
