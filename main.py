@@ -1,4 +1,3 @@
-from operator import floordiv, sub
 import pygame
 from pygame.locals import (
     USEREVENT,
@@ -44,7 +43,6 @@ def main():
                     board.move_figure()
 
             screen.fill(black)
-            # pygame.draw.rect(screen, white, (0, 0, *board.get_pixel_size()), 1)
             for coords in board.print_board():
                 pygame.draw.rect(board_surf, white, coords)
             for coords in board.print_figure():
