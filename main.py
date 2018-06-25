@@ -8,6 +8,7 @@ import modules.constants as c
 from modules.input_handler import input_handler
 
 from modules.board import Board
+from modules.helpers import write_end_text
 
 pygame.init()
 
@@ -51,14 +52,12 @@ def main():
             pygame.display.flip()
         else:
             screen.fill(black)
-            scoretext = myfont.render("Your score is {0}".format(board.get_score()), 1, white)
-            text_size = scoretext.get_size()
-            # Screen half minus text half to center text
-            screen.blit(scoretext, tuple(map(
-                sub,
-                tuple(map(floordiv, size, half)),
-                tuple(map(floordiv, text_size, half))
-            )))
+
+            text_list = list()
+            text_list.append(myfont.render("Game over", 1, white))
+            text_list.append(myfont.render("Your score is {0}".format(board.get_score()), 1, white))
+
+            write_end_text(screen, text_list, size)
 
 
 if __name__ == '__main__':
