@@ -13,7 +13,7 @@ pygame.init()
 
 def main():
     size = c.SCREEN_SIZE
-    # speed = [1, 1]
+    speed = c.DEFAULT_SPEED
     black = 0, 0, 0
     white = 255, 255, 255
 
@@ -25,7 +25,7 @@ def main():
 
     # events
     MOVEDOWN = USEREVENT+2
-    pygame.time.set_timer(MOVEDOWN, 1000)
+    pygame.time.set_timer(MOVEDOWN, speed)
 
     myfont = pygame.font.SysFont("monospace", 16)
 
