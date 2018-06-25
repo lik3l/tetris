@@ -19,7 +19,7 @@ def write_end_text(screen, text_list, size):
                 size[1] // 2 - text_height // 2 + prev_height
             )
         )
-        prev_height = text.get_height()
+        prev_height += text.get_height()
 
 
 def get_scores():
@@ -29,10 +29,12 @@ def get_scores():
     return scores
 
 
-def enter_player_name(pygame, board, screen):
+def enter_player_name(myfont, board, color):
     """ Username entering """
-    pressed = pygame.key.get_pressed()
-    if pressed == c.K_RETURN:
-        board.score.write_top_score()
-    else:
-        board.score.update_player_name()
+    text_list = list()
+    text_list.append(myfont.render("Game over", 1, color))
+    text_list.append(myfont.render(board.score.get_score_end(), 1, color))
+    text_list.append(myfont.render("Enter your name", 1, color))
+    text_list.append(myfont.render(board.score.get_player_name(), 1, color))
+
+    return text_list
