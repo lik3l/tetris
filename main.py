@@ -51,7 +51,12 @@ def main():
         elif board.get_score_state():
             screen.fill(black)
 
-            text = enter_player_name(myfont, board, white)
+            if not board.score.check_score():
+                text = list()
+                text.append(myfont.render('Game over'))
+                text.append(myfont.render('U R LOOSER!!!'))
+            else:
+                text = enter_player_name(myfont, board, white)
             write_end_text(screen, text, size)
 
             for event in pygame.event.get():
@@ -61,7 +66,7 @@ def main():
                     if event.key == pygame.K_RETURN:
                         board.score.write_top_score()
                         board.end_score_state()
-                    else:
+                    elif board.score.check_score():
                         key = str(event.unicode) if not event.key == pygame.K_BACKSPACE else 'BACKSPACE'
                         board.score.update_player_name(key)
 

@@ -19,6 +19,9 @@ class Score:
     def get_score(self):
         return 'Your score: {}'.format(self.score)
 
+    def check_score(self):
+        return self.score >= self.top_scores[-1]['score']
+
     def get_score_end(self):
         return 'Your score is: {}'.format(self.score)
 
@@ -30,7 +33,7 @@ class Score:
         """ Write user score to rating """
         self.top_scores.append({'name': self.player_name, 'score': self.score})
         f = open('scores.json', 'w')
-        f.write(json.dumps(self.top_scores))
+        f.write(json.dumps(sorted(self.top_scores, key=lambda x: x['score'], reverse=True)[:10]))
         f.close()
 
     def update_player_name(self, key):
