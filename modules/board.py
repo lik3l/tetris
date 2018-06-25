@@ -31,6 +31,7 @@ class Board:
         self.figure_position = self.get_starting_position()
 
         self.score = Score()
+        self.score_state = False
 
     def __str__(self):
         return '\n'.join(str(x) for x in self.board)
@@ -190,7 +191,8 @@ class Board:
             self.set_board_position(*coords)
         self.remove_lines(self.get_full())
         if self.check_endgame():
-            self.state = False
+            self.end_game()
+            self.set_score_state()
             return
         self.make_random_figure()
 
@@ -208,3 +210,16 @@ class Board:
     def check_endgame(self):
         """ Returns True if game over """
         return any(self.board[0])
+
+    def get_score_state(self):
+        """ Represents score writing """
+        return self.score_state
+
+    def set_score_state(self):
+        self.score_state = True
+
+    def end_score_state(self):
+        self.score_state = False
+
+    def end_game(self):
+        self.state = False

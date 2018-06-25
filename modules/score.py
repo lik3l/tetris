@@ -7,7 +7,7 @@ class Score:
     def __init__(self):
         self.score = 0
         self.top_scores = get_scores()
-        self.player_name = 'test'
+        self.player_name = ''
 
     def __str__(self):
         return 'Score: {}'.format(self.score)
@@ -32,3 +32,12 @@ class Score:
         f = open('scores.json', 'w')
         f.write(json.dumps(self.top_scores))
         f.close()
+
+    def update_player_name(self, key):
+        if key == 'BACKSPACE':
+            self.player_name = self.player_name[:-1]
+        else:
+            self.player_name += key.upper()
+
+    def get_player_name(self):
+        return self.player_name

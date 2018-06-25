@@ -50,16 +50,26 @@ def main():
             scoretext = myfont.render(board.score.get_score(), 1, white)
             screen.blit(scoretext, (5, 10))
             pygame.display.flip()
-        else:
+        elif board.get_score_state():
             screen.fill(black)
 
             text_list = list()
             text_list.append(myfont.render("Game over", 1, white))
             text_list.append(myfont.render(board.score.get_score_end(), 1, white))
 
-            board.score.write_top_score()
-
             write_end_text(screen, text_list, size)
+
+            for event in pygame.event.get():
+                if event.type == pygame.KEYDOWN:
+                    if event.type == pygame.QUIT:
+                        sys.exit()
+                    elif event.key == pygame.K_RETURN:
+                        board.score.write_top_score()
+                        board.end_score_state()
+                    else:
+                        board.score.update_player_name(str(event.unicode))
+        else:
+            break
 
 
 if __name__ == '__main__':

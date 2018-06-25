@@ -1,4 +1,5 @@
 from json import loads
+from pygame import locals as c
 
 
 def write_end_text(screen, text_list, size):
@@ -26,3 +27,12 @@ def get_scores():
     with open('scores.json') as f:
         scores = loads(f.read())
     return scores
+
+
+def enter_player_name(pygame, board, screen):
+    """ Username entering """
+    pressed = pygame.key.get_pressed()
+    if pressed == c.K_RETURN:
+        board.score.write_top_score()
+    else:
+        board.score.update_player_name()
