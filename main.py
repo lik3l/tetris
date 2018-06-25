@@ -16,7 +16,6 @@ pygame.key.set_repeat(500, 50)
 def main():
     size = c.SCREEN_SIZE
     speed = c.DEFAULT_SPEED
-    half = (2, 2)
     black = 0, 0, 0
     white = 255, 255, 255
 
