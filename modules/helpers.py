@@ -33,6 +33,11 @@ def enter_player_name(myfont, board, color):
     """ Username entering """
     text_list = list()
     text_list.append(myfont.render("Game over", 1, color))
+    text_list.append(myfont.render(" ", 1, color))
+    text_list.append(myfont.render("Top Scores", 1, color))
+    for score in board.score.get_score_list():
+        text_list.append(myfont.render(score, 1, color))
+    text_list.append(myfont.render(" ", 1, color))
     text_list.append(myfont.render(board.score.get_score_end(), 1, color))
     text_list.append(myfont.render("Enter your name", 1, color))
     text_list.append(myfont.render(board.score.get_player_name(), 1, color))
