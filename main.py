@@ -47,7 +47,7 @@ def main():
                 pygame.draw.rect(board_surf, white, coords)
             for coords in board.print_figure():
                 pygame.draw.rect(board_surf, white, coords)
-            scoretext = myfont.render("Score {0}".format(board.get_score()), 1, white)
+            scoretext = myfont.render(board.score.get_score(), 1, white)
             screen.blit(scoretext, (5, 10))
             pygame.display.flip()
         else:
@@ -55,7 +55,7 @@ def main():
 
             text_list = list()
             text_list.append(myfont.render("Game over", 1, white))
-            text_list.append(myfont.render("Your score is {0}".format(board.get_score()), 1, white))
+            text_list.append(myfont.render(board.score.get_score_end(), 1, white))
 
             write_end_text(screen, text_list, size)
 

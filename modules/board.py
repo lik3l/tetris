@@ -2,6 +2,7 @@ from .constants import DEFAULT_WIDTH, DEFAULT_HEIGHT
 from . import constants as c
 
 from .figures import Figure
+from .score import Score
 
 
 class Board:
@@ -29,7 +30,7 @@ class Board:
                                   -self.figure.get_sprite_size())
         self.figure_position = self.get_starting_position()
 
-        self.score = 0
+        self.score = Score()
 
     def __str__(self):
         return '\n'.join(str(x) for x in self.board)
@@ -197,20 +198,12 @@ class Board:
         """ Returns full board line ids """
         return [idx for idx, line in enumerate(self.board) if all(line)]
 
-    def increase_score(self, count):
-        """ Increases score """
-        self.score += count ** c.MULTI_LINE_MULTIPLIER * c.LINE_COST
-
-    def get_score(self):
-        """ Returns score int """
-        return self.score
-
     def remove_lines(self, lines):
         """ Remove lines by line id """
         for line_idx in lines:
             self.board.pop(line_idx)
             self.board.insert(0, [0] * self.width)
-        self.increase_score(len(lines))
+        self.score.increase_score(len(lines))
 
     def check_endgame(self):
         """ Returns True if game over """
