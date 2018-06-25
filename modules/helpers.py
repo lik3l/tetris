@@ -1,3 +1,6 @@
+from json import loads
+
+
 def write_end_text(screen, text_list, size):
     """
     Writes text to a center of the screen
@@ -16,3 +19,10 @@ def write_end_text(screen, text_list, size):
             )
         )
         prev_height = text.get_height()
+
+
+def get_scores():
+    """ Get scores from file """
+    with open('scores.json') as f:
+        scores = loads(f.read())
+    return scores
