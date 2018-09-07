@@ -4,12 +4,12 @@ import pygame
 from pygame.locals import USEREVENT
 
 import modules.constants as c
-from modules.input_handler import input_handler
+from modules.input_handler import input_handler, input_up_handler
 from modules.board import Board
 from modules.helpers import write_end_text, enter_player_name
 
 pygame.init()
-pygame.key.set_repeat(500, 50)
+pygame.key.set_repeat(400, 50)
 
 
 def main():
@@ -32,13 +32,16 @@ def main():
 
     while True:
         if board.get_game_state():
-            input_handler(pygame, board)
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     sys.exit()
                 if event.type == MOVEDOWN:
                     board.move_figure()
+                if event.type == pygame.KEYDOWN:
+                    input_handler(pygame, board)
+                if event.type == pygame.KEYUP:
+                    input_up_handler(pygame)
 
             screen.fill(black)
             for coords in board.print_board():
