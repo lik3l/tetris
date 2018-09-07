@@ -19,6 +19,9 @@ class Score:
     def get_score(self):
         return 'Your score: {}'.format(self.score)
 
+    def get_int_score(self):
+        return self.score
+
     def check_score(self):
         return self.score >= self.top_scores[-1]['score']
 

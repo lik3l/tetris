@@ -1,3 +1,5 @@
+from pygame.locals import USEREVENT
+
 Z = 0
 S = 1
 O = 2
@@ -7,6 +9,8 @@ I = 5
 W = 6
 
 FIGURE_TYPES = [Z, S, O, L, J, I, W]
+
+MOVEDOWN = USEREVENT + 2
 
 # Colors
 BLACK = [0, 0, 0]

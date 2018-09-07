@@ -6,7 +6,7 @@ from pygame.locals import USEREVENT
 import modules.constants as c
 from modules.input_handler import input_handler, input_up_handler
 from modules.board import Board
-from modules.helpers import write_end_text, enter_player_name, draw_rect, get_board_color
+from modules.helpers import write_end_text, enter_player_name, draw_rect, get_board_color, update_timer
 
 pygame.init()
 pygame.key.set_repeat(400, 50)
@@ -15,6 +15,7 @@ pygame.key.set_repeat(400, 50)
 def main():
     size = c.SCREEN_SIZE
     speed = c.DEFAULT_SPEED
+    g_round = 1
 
     board = Board(*size)
     board_rect = pygame.Rect((size[0]//2 - board.get_pixel_size()[0]//2,
@@ -24,8 +25,7 @@ def main():
     board_surf = screen.subsurface(board_rect)
 
     # events
-    MOVEDOWN = USEREVENT+2
-    pygame.time.set_timer(MOVEDOWN, speed)
+    pygame.time.set_timer(c.MOVEDOWN, speed)
 
     myfont = pygame.font.SysFont("monospace", 16)
 
@@ -35,7 +35,7 @@ def main():
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     sys.exit()
-                if event.type == MOVEDOWN:
+                if event.type == c.MOVEDOWN:
                     board.move_figure()
                 if event.type == pygame.KEYDOWN:
                     input_handler(pygame, board)
@@ -50,6 +50,8 @@ def main():
                 draw_rect(board_surf, board.figure.get_color(), coords)
             scoretext = myfont.render(board.score.get_score(), 1, c.WHITE)
             screen.blit(scoretext, (5, 10))
+            if board.score.get_int_score() >= 100 * g_round:
+                speed, g_round = update_timer(speed, pygame, g_round)
             pygame.display.flip()
         elif board.get_score_state():
             screen.fill(c.BLACK)
