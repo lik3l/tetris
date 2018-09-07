@@ -1,5 +1,4 @@
 from .constants import DEFAULT_WIDTH, DEFAULT_HEIGHT
-from . import constants as c
 
 from .figures import Figure
 from .score import Score
@@ -43,7 +42,7 @@ class Board:
     def is_available(self, x, y):
         if self.width > x >= 0 and self.height > y >= 0:
             return self.board[y][x] == 0
-        elif y < 0:
+        elif y < 0 <= x < self.width:
             return True
         else:
             # Index out of range
