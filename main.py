@@ -6,7 +6,7 @@ from pygame.locals import USEREVENT
 import modules.constants as c
 from modules.input_handler import input_handler, input_up_handler
 from modules.board import Board
-from modules.helpers import write_end_text, enter_player_name
+from modules.helpers import write_end_text, enter_player_name, draw_rect
 
 pygame.init()
 pygame.key.set_repeat(400, 50)
@@ -15,14 +15,14 @@ pygame.key.set_repeat(400, 50)
 def main():
     size = c.SCREEN_SIZE
     speed = c.DEFAULT_SPEED
-    black = 0, 0, 0
-    white = 255, 255, 255
 
     board = Board(*size)
-    board_rect = pygame.Rect((0, 0, *size))
+    board_rect = pygame.Rect((size[0]//2 - board.get_pixel_size()[0]//2,
+                              0, *board.get_pixel_size()))
 
     screen = pygame.display.set_mode(size)
     board_surf = screen.subsurface(board_rect)
+    print(screen.get_rect())
 
     # events
     MOVEDOWN = USEREVENT+2
@@ -43,23 +43,24 @@ def main():
                 if event.type == pygame.KEYUP:
                     input_up_handler(pygame)
 
-            screen.fill(black)
+            screen.fill(c.GRAY)
+            board_surf.fill(c.BLACK)
             for coords in board.print_board():
-                pygame.draw.rect(board_surf, white, coords)
+                draw_rect(board_surf, c.WHITE, coords)
             for coords in board.print_figure():
-                pygame.draw.rect(board_surf, board.figure.get_color(), coords)
-            scoretext = myfont.render(board.score.get_score(), 1, white)
+                draw_rect(board_surf, board.figure.get_color(), coords)
+            scoretext = myfont.render(board.score.get_score(), 1, c.WHITE)
             screen.blit(scoretext, (5, 10))
             pygame.display.flip()
         elif board.get_score_state():
-            screen.fill(black)
+            screen.fill(c.BLACK)
 
             if not board.score.check_score():
                 text = list()
                 text.append(myfont.render('Game over'))
                 text.append(myfont.render('U R LOOSER!!!'))
             else:
-                text = enter_player_name(myfont, board, white)
+                text = enter_player_name(myfont, board, c.WHITE)
             write_end_text(screen, text, size)
 
             for event in pygame.event.get():

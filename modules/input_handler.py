@@ -1,4 +1,3 @@
-import time
 from pygame import locals as c
 
 

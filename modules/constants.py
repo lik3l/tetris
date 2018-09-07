@@ -8,6 +8,11 @@ W = 6
 
 FIGURE_TYPES = [Z, S, O, L, J, I, W]
 
+# Colors
+BLACK = [0, 0, 0]
+GRAY = [20, 20, 20]
+WHITE = [255, 255, 255]
+
 DEFAULT_SPEED = 1000
 
 COLORS = (
@@ -25,7 +30,7 @@ MULTI_LINE_MULTIPLIER = 2
 
 # Default width board size in blocks
 # For now field is 1:2 ratio, later calculations expect that
-DEFAULT_WIDTH = 8
+DEFAULT_WIDTH = 9
 DEFAULT_HEIGHT = DEFAULT_WIDTH * 2
 
 SCREEN_SIZE = (640, 480)
