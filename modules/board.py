@@ -56,6 +56,12 @@ class Board:
                 return False
         return True
 
+    def get_fullness(self):
+        """ Returns percentage of board fullness """
+        for idx, line in enumerate(self.board):
+            if any(line):
+                return 1 - idx / self.height
+
     def rotate_right(self):
         """ Checks and rotates figure """
         if self.check_rotate('right'):
@@ -96,10 +102,10 @@ class Board:
             for p_idx, pixel in enumerate(line):
                 if pixel:
                     arr.append((
-                        p_idx * self.pixel_ratio,
-                        l_idx * self.pixel_ratio,
-                        self.pixel_ratio,
-                        self.pixel_ratio
+                        p_idx * self.pixel_ratio - 1,
+                        l_idx * self.pixel_ratio + 1,
+                        self.pixel_ratio - 1,
+                        self.pixel_ratio - 1
                     ))
         return arr
 
@@ -122,10 +128,10 @@ class Board:
         """ Return represented figure coords """
         return [
             [
-                pos[0] * self.pixel_ratio,
-                pos[1] * self.pixel_ratio,
-                self.pixel_ratio,
-                self.pixel_ratio
+                pos[0] * self.pixel_ratio - 1,
+                pos[1] * self.pixel_ratio + 1,
+                self.pixel_ratio - 1,
+                self.pixel_ratio - 1
             ]
             for pos in self.repr_figure_on_board()
         ]

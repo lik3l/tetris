@@ -3,6 +3,8 @@ from json import loads
 from pygame import Color, Surface, SRCALPHA, transform, draw, BLEND_RGBA_MAX, BLEND_RGBA_MIN
 from pygame.rect import Rect
 
+from modules import constants as c
+
 
 def write_end_text(screen, text_list, size):
     """
@@ -31,6 +33,17 @@ def get_scores():
     return scores
 
 
+def get_board_color(fullness):
+    if fullness > .75:
+        return c.RED
+    elif fullness > .5:
+        return c.YELLOW
+    elif fullness > .25:
+        return c.YGREEN
+    else:
+        return c.GREEN
+
+
 def enter_player_name(myfont, board, color):
     """ Username entering """
     text_list = list()
@@ -47,7 +60,7 @@ def enter_player_name(myfont, board, color):
     return text_list
 
 
-def draw_rect(surface, color, rect, radius=0.5):
+def draw_rect(surface, color, rect, radius=0.3):
     """
     AAfilledRoundedRect(surface,rect,color,radius=0.4)
 

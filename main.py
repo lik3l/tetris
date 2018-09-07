@@ -6,7 +6,7 @@ from pygame.locals import USEREVENT
 import modules.constants as c
 from modules.input_handler import input_handler, input_up_handler
 from modules.board import Board
-from modules.helpers import write_end_text, enter_player_name, draw_rect
+from modules.helpers import write_end_text, enter_player_name, draw_rect, get_board_color
 
 pygame.init()
 pygame.key.set_repeat(400, 50)
@@ -22,7 +22,6 @@ def main():
 
     screen = pygame.display.set_mode(size)
     board_surf = screen.subsurface(board_rect)
-    print(screen.get_rect())
 
     # events
     MOVEDOWN = USEREVENT+2
@@ -46,7 +45,7 @@ def main():
             screen.fill(c.GRAY)
             board_surf.fill(c.BLACK)
             for coords in board.print_board():
-                draw_rect(board_surf, c.WHITE, coords)
+                draw_rect(board_surf, get_board_color(board.get_fullness()), coords)
             for coords in board.print_figure():
                 draw_rect(board_surf, board.figure.get_color(), coords)
             scoretext = myfont.render(board.score.get_score(), 1, c.WHITE)
