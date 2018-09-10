@@ -1,3 +1,4 @@
+import sys
 from json import loads
 
 from pygame import Color, Surface, SRCALPHA, transform, draw, BLEND_RGBA_MAX, BLEND_RGBA_MIN
@@ -64,6 +65,66 @@ def enter_player_name(myfont, board, color):
     text_list.append(myfont.render(board.score.get_player_name(), 1, color))
 
     return text_list
+
+
+class EndGame:
+    def __init__(self, font, color, size, screen, board):
+        self.font = font
+        self.screen = screen
+        self.board = board
+        self.size = size
+        self.color = color
+        self.dark_color = c.BLACK
+        self.options = [
+            'Restart', '', 'Exit'
+        ]
+        self.selected = 0
+
+    def move_up(self):
+        start = len(self.options) - 1 if not self.selected else self.selected - 1
+        for idx in range(start, -1, -1):
+            if self.options[idx]:
+                self.selected = idx
+                return idx
+
+    def move_down(self):
+        start = self.selected if self.selected != len(self.options) - 1 else -1
+        for idx in range(start + 1, len(self.options)):
+            if self.options[idx]:
+                self.selected = idx
+                return idx
+
+    def get_options(self):
+        return [
+            self.font.render(
+                text,
+                1,
+                self.color if idx != self.selected else self.dark_color,
+                self.dark_color if idx != self.selected else self.color
+
+            )
+            for idx, text in enumerate(self.options)
+        ]
+
+    def submit(self, reset):
+        if self.selected == 2:
+            sys.exit()
+        elif self.selected == 0:
+            return reset(self.board)
+
+    def draw(self):
+        text_list = self.get_options()
+        prev_height = 0
+        text_height = sum([x.get_height() for x in text_list])
+        for text in text_list:
+            self.screen.blit(
+                text,
+                (
+                    self.size[0] // 2 - text.get_width() // 2,
+                    self.size[1] // 2 - text_height // 2 + prev_height
+                )
+            )
+            prev_height += text.get_height()
 
 
 def draw_rect(surface, color, rect, radius=0.3):

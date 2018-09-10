@@ -20,8 +20,8 @@ class Board:
         self.height = DEFAULT_HEIGHT
         self.pixel_size = (self.width * self.pixel_ratio,
                            self.height * self.pixel_ratio)
-
-        self.board = [[0 for dummy_w in range(self.width)] for dummy_h in range(self.height)]
+        self.board = [[]]
+        self._set_board()
         self.state = True
 
         self.figure = Figure(Figure.get_random())
@@ -31,9 +31,23 @@ class Board:
 
         self.score = Score()
         self.score_state = False
+        self.end_game_state = False
 
     def __str__(self):
         return '\n'.join(str(x) for x in self.board)
+
+    def reset_board(self):
+        """ Reset board on restart """
+        self._set_board()
+        self.state = True
+        self.end_game_state = False
+        self.score_state = False
+        self.figure = Figure(Figure.get_random())
+        self.figure_position = self.get_starting_position()
+        self.score = Score()
+
+    def _set_board(self):
+        self.board = [[0 for dummy_w in range(self.width)] for dummy_h in range(self.height)]
 
     def get_game_state(self):
         """ Returns True if game is running """
@@ -228,3 +242,9 @@ class Board:
 
     def end_game(self):
         self.state = False
+
+    def get_end_game_state(self):
+        return self.end_game_state
+
+    def set_end_game(self):
+        self.end_game_state = True
