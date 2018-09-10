@@ -31,10 +31,10 @@ def main():
 
     myfont = pygame.font.SysFont("monospace", 16)
     end_game = EndGame(myfont, c.WHITE, size, screen, board)
+    pause_state = False
 
     while True:
         if board.get_game_state():
-
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     sys.exit()
@@ -42,18 +42,26 @@ def main():
                     board.move_figure()
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
-                        # TODO: Pause
-                        pass
-                    input_handler(pygame, board)
-                if event.type == pygame.KEYUP:
+                        if not pause_state:
+                            pygame.time.set_timer(c.MOVEDOWN, 0)
+                        else:
+                            pygame.time.set_timer(c.MOVEDOWN, speed)
+                        pause_state = not pause_state
+                    elif not pause_state:
+                        input_handler(pygame, board)
+                if event.type == pygame.KEYUP and not pause_state:
                     input_up_handler(pygame)
 
             screen.fill(c.GRAY)
-            board_surf.fill(c.BLACK)
-            for coords in board.print_board():
-                draw_rect(board_surf, get_board_color(board.get_fullness()), coords)
-            for coords in board.print_figure():
-                draw_rect(board_surf, board.figure.get_color(), coords)
+            if not pause_state:
+                board_surf.fill(c.BLACK)
+                for coords in board.print_board():
+                    draw_rect(board_surf, get_board_color(board.get_fullness()), coords)
+                for coords in board.print_figure():
+                    draw_rect(board_surf, board.figure.get_color(), coords)
+            else:
+                write_end_text(screen, [myfont.render('Paused', 1, c.WHITE)], size)
+
             scoretext = myfont.render(board.score.get_score(), 1, c.WHITE)
             screen.blit(scoretext, (5, 10))
             if board.score.get_int_score() >= 100 * g_round:
