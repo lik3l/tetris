@@ -110,7 +110,7 @@ class EndGame:
         if self.selected == 2:
             sys.exit()
         elif self.selected == 0:
-            return reset(self.board)
+            reset(self.board)
 
     def draw(self):
         text_list = self.get_options()

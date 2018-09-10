@@ -3,15 +3,18 @@ import sys
 import pygame
 
 import modules.constants as c
-from modules.input_handler import input_handler, input_up_handler
+from modules.input_handler import input_handler, input_up_handler, end_game_state_handler
 from modules.board import Board
 from modules.helpers import write_end_text, enter_player_name, draw_rect, get_board_color, update_timer, EndGame
 
 pygame.init()
 pygame.key.set_repeat(400, 50)
 
+speed = c.DEFAULT_SPEED
+
 
 def main():
+    global speed
     size = c.SCREEN_SIZE
     speed = c.DEFAULT_SPEED
     g_round = 1
@@ -38,6 +41,9 @@ def main():
                 if event.type == c.MOVEDOWN:
                     board.move_figure()
                 if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_ESCAPE:
+                        # TODO: Pause
+                        pass
                     input_handler(pygame, board)
                 if event.type == pygame.KEYUP:
                     input_up_handler(pygame)
@@ -72,7 +78,6 @@ def main():
                         board.score.write_top_score()
                         board.end_score_state()
                         board.set_end_game()
-                        # speed = reset(board)
                     elif board.score.check_score():
                         key = str(event.unicode) if not event.key == pygame.K_BACKSPACE else 'BACKSPACE'
                         board.score.update_player_name(key)
@@ -84,24 +89,19 @@ def main():
 
             end_game.draw()
             for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    sys.exit()
-                elif event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_UP:
-                        end_game.move_up()
-                    elif event.key == pygame.K_DOWN:
-                        end_game.move_down()
-                    elif event.key == pygame.K_RETURN:
-                        speed = end_game.submit(reset)
-
+                end_game_state_handler(end_game, event, pygame, reset)
             pygame.display.flip()
         else:
+            # TODO: Add watch score screen in menu
             break
 
 
 def reset(board):
+    global speed
     board.reset_board()
     pygame.time.set_timer(c.MOVEDOWN, c.DEFAULT_SPEED)
+    speed = c.DEFAULT_SPEED
+
     return c.DEFAULT_SPEED
 
 

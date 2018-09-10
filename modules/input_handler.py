@@ -1,3 +1,5 @@
+import sys
+
 from pygame import locals as c
 
 
@@ -47,3 +49,15 @@ def input_up_handler(pygame):
     for k in pressed_keys_map:
         if not pressed[k]:
             pressed_keys_map[k]['count'] = 0
+
+
+def end_game_state_handler(end_game, event, pygame, reset):
+    if event.type == pygame.QUIT:
+        sys.exit()
+    elif event.type == pygame.KEYDOWN:
+        if event.key == pygame.K_UP:
+            end_game.move_up()
+        elif event.key == pygame.K_DOWN:
+            end_game.move_down()
+        elif event.key == pygame.K_RETURN:
+            end_game.submit(reset)
