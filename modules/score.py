@@ -23,7 +23,7 @@ class Score:
         return self.score
 
     def check_score(self):
-        return self.score >= self.top_scores[-1]['score']
+        return self.score > self.top_scores[-1]['score'] if len(self.top_scores) >= 10 else True
 
     def get_score_end(self):
         return 'Your score is: {}'.format(self.score)

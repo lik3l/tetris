@@ -67,6 +67,18 @@ def enter_player_name(myfont, board, color):
     return text_list
 
 
+def get_not_scored(myfont, board, color):
+    text = list()
+    text.append(myfont.render('Game over', 1, c.WHITE))
+    text.append(myfont.render('U R LOOSER!!!', 1, c.WHITE))
+    text.append(myfont.render(" ", 1, color))
+    text.append(myfont.render("Top Scores", 1, color))
+    for score in board.score.get_score_list():
+        text.append(myfont.render(score, 1, color))
+
+    return text
+
+
 class EndGame:
     def __init__(self, font, color, size, screen, board):
         self.font = font

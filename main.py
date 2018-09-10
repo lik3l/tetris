@@ -5,7 +5,8 @@ import pygame
 import modules.constants as c
 from modules.input_handler import input_handler, input_up_handler, end_game_state_handler
 from modules.board import Board
-from modules.helpers import write_end_text, enter_player_name, draw_rect, get_board_color, update_timer, EndGame
+from modules.helpers import write_end_text, enter_player_name, draw_rect, get_board_color, update_timer, EndGame, \
+    get_not_scored
 
 pygame.init()
 pygame.key.set_repeat(400, 50)
@@ -71,9 +72,7 @@ def main():
             screen.fill(c.BLACK)
 
             if not board.score.check_score():
-                text = list()
-                text.append(myfont.render('Game over'))
-                text.append(myfont.render('U R LOOSER!!!'))
+                text = get_not_scored(myfont, board, c.WHITE)
             else:
                 text = enter_player_name(myfont, board, c.WHITE)
             write_end_text(screen, text, size)
