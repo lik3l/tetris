@@ -31,15 +31,14 @@ def main():
     myfont = pygame.font.SysFont("monospace", 16)
     end_game = EndGame(myfont, c.WHITE, size, screen, board)
     game = Game(board, pygame, screen, end_game)
-    game.run()  # Must contain all while loop
-
+    game.start()  # Must contain all while loop
+    screen.fill(c.GRAY)
     while True:
         if game.get_state() == game.GAME_STATE:
             """ Game running state """
             for event in pygame.event.get():
                 game_flow_handler(event, pygame, board, game)
 
-            screen.fill(c.GRAY)
             if not game.is_paused():
                 game.board_surf.fill(c.BLACK)
                 for coords in board.print_board():
@@ -50,7 +49,7 @@ def main():
                 write_end_text(screen, [myfont.render('Paused', 1, c.WHITE)], size)
 
             scoretext = myfont.render(board.score.get_score(), 1, c.WHITE)
-            screen.blit(scoretext, (5, 10))
+            game.board_surf.blit(scoretext, (5, 10))
             if board.score.get_int_score() >= 100 * game.get_round():
                 game.next_round()
             pygame.display.flip()

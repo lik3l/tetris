@@ -64,10 +64,14 @@ class Game:
     def get_round(self):
         return self.round
 
-    def run(self):
+    def start(self):
         self.pygame.time.set_timer(c.MOVEDOWN, self.speed)
 
+    def game_flow(self):
+        pass
+
     def reset(self):
+        self.screen.fill(c.GRAY)
         self.board.reset_board()
         self.set_default_speed()
         self.round = 1
