@@ -3,6 +3,7 @@ import sys
 import pygame
 
 import modules.constants as c
+from modules.game import Game
 from modules.input_handler import input_handler, input_up_handler, end_game_state_handler
 from modules.board import Board
 from modules.helpers import write_end_text, enter_player_name, draw_rect, get_board_color, update_timer, EndGame, \
@@ -32,10 +33,10 @@ def main():
 
     myfont = pygame.font.SysFont("monospace", 16)
     end_game = EndGame(myfont, c.WHITE, size, screen, board)
-    pause_state = False
+    game = Game(board, pygame, screen)
 
     while True:
-        if board.get_game_state():
+        if game.get_state() == game.GAME_STATE:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     sys.exit()
@@ -43,18 +44,18 @@ def main():
                     board.move_figure()
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
-                        if not pause_state:
+                        if not game.is_paused():
                             pygame.time.set_timer(c.MOVEDOWN, 0)
                         else:
                             pygame.time.set_timer(c.MOVEDOWN, speed)
-                        pause_state = not pause_state
-                    elif not pause_state:
+                        game.pause()
+                    elif not game.is_paused():
                         input_handler(pygame, board)
-                if event.type == pygame.KEYUP and not pause_state:
+                if event.type == pygame.KEYUP and not game.is_paused():
                     input_up_handler(pygame)
 
             screen.fill(c.GRAY)
-            if not pause_state:
+            if not game.is_paused():
                 board_surf.fill(c.BLACK)
                 for coords in board.print_board():
                     draw_rect(board_surf, get_board_color(board.get_fullness()), coords)
