@@ -7,11 +7,15 @@ class Game:
         self.board = board
         self.pygame = pygame
         self.screen = screen
-        self.state = self.GAME_STATE
         self.pause_state = False
 
     def get_state(self):
-        return self.state
+        if self.board.get_game_state():
+            return self.GAME_STATE
+        elif self.board.get_end_game_state():
+            return self.ENDGAME_STATE
+        elif self.board.get_score_state():
+            return self.SCORE_STATE
 
     def pause(self):
         self.pause_state = not self.pause_state
