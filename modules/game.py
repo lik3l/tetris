@@ -16,6 +16,7 @@ class Game:
         self.speed = self.default_speed
         # Needed to break keypress repeat
         self.k_down_pressed = False
+        self.round = 1
 
     def get_state(self):
         if self.board.get_game_state():
@@ -48,3 +49,17 @@ class Game:
 
     def set_default_speed(self):
         self.speed = self.default_speed
+
+    def next_round(self):
+        self.round += 1
+        self.speed = int(self.speed * 0.9)
+        self.pygame.time.set_timer(c.MOVEDOWN, self.speed)
+
+    def get_round(self):
+        return self.round
+
+    def reset(self):
+        self.board.reset_board()
+        self.set_default_speed()
+        self.round = 1
+        self.pygame.time.set_timer(c.MOVEDOWN, self.speed)

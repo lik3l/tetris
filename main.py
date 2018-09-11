@@ -5,8 +5,7 @@ from modules.flow_handlers import game_flow_handler, score_flow_handler
 from modules.game import Game
 from modules.input_handler import end_game_state_handler
 from modules.board import Board
-from modules.helpers import write_end_text, enter_player_name, draw_rect, get_board_color, update_timer, EndGame, \
-    get_not_scored
+from modules.helpers import write_end_text, enter_player_name, draw_rect, get_board_color, EndGame, get_not_scored
 
 pygame.init()
 pygame.key.set_repeat(300, 50)  # 300 pause before repeat
@@ -15,7 +14,6 @@ pygame.key.set_repeat(300, 50)  # 300 pause before repeat
 def main():
     size = c.SCREEN_SIZE
     speed = c.DEFAULT_SPEED
-    g_round = 1
 
     board = Board(*size)
     board_rect = pygame.Rect((size[0]//2 - board.get_pixel_size()[0]//2,
@@ -50,8 +48,8 @@ def main():
 
             scoretext = myfont.render(board.score.get_score(), 1, c.WHITE)
             screen.blit(scoretext, (5, 10))
-            if board.score.get_int_score() >= 100 * g_round:
-                speed, g_round = update_timer(speed, pygame, g_round)
+            if board.score.get_int_score() >= 10 * game.get_round():
+                game.next_round()
             pygame.display.flip()
         elif game.get_state() == game.SCORE_STATE:
             """ Show and input score """
@@ -73,17 +71,11 @@ def main():
 
             end_game.draw()
             for event in pygame.event.get():
-                end_game_state_handler(event, pygame, reset, game)
+                end_game_state_handler(event, pygame, game)
             pygame.display.flip()
         else:
             # TODO: Add watch score screen in menu
             break
-
-
-def reset(board, game):
-    board.reset_board()
-    game.set_default_speed()
-    pygame.time.set_timer(c.MOVEDOWN, game.get_speed())
 
 
 if __name__ == '__main__':

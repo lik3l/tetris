@@ -53,7 +53,7 @@ def input_up_handler(pygame, speed):
             pressed_keys_map[k]['count'] = 0
 
 
-def end_game_state_handler(event, pygame, reset, game):
+def end_game_state_handler(event, pygame, game):
     if event.type == pygame.QUIT:
         sys.exit()
     elif event.type == pygame.KEYDOWN:
@@ -63,4 +63,4 @@ def end_game_state_handler(event, pygame, reset, game):
             game.end_game.move_down()
         elif event.key == pygame.K_RETURN:
             game.up_down()
-            game.end_game.submit(reset, game)
+            game.end_game.submit(game)

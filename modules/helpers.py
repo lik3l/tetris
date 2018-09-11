@@ -34,12 +34,6 @@ def get_scores():
     return scores
 
 
-def update_timer(speed, pygame, g_round):
-    new_speed = int(speed * .9)
-    pygame.time.set_timer(c.MOVEDOWN, new_speed)
-    return new_speed, g_round + 1
-
-
 def get_board_color(fullness):
     if fullness > .75:
         return c.RED
@@ -118,11 +112,11 @@ class EndGame:
             for idx, text in enumerate(self.options)
         ]
 
-    def submit(self, reset, game):
+    def submit(self, game):
         if self.selected == 2:
             sys.exit()
         elif self.selected == 0:
-            reset(self.board, game)
+            game.reset()
 
     def draw(self):
         text_list = self.get_options()
