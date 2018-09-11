@@ -99,6 +99,9 @@ class Board:
         """ Return board size in pixels """
         return self.pixel_size
 
+    def get_block_size(self):
+        return self.pixel_ratio, self.pixel_ratio
+
     def make_random_figure(self):
         """ Makes random figure """
         self.figure = Figure(Figure.get_random())

@@ -133,10 +133,8 @@ class EndGame:
             prev_height += text.get_height()
 
 
-def draw_rect(surface, color, rect, radius=0.3):
+def draw_rect(surface, color, rect, image, radius=0.4):
     """
-    AAfilledRoundedRect(surface,rect,color,radius=0.4)
-
     surface : destination
     rect    : rectangle
     color   : rgb or rgba
@@ -168,5 +166,6 @@ def draw_rect(surface, color, rect, radius=0.3):
 
     rectangle.fill(color, special_flags=BLEND_RGBA_MAX)
     rectangle.fill((255, 255, 255, alpha), special_flags=BLEND_RGBA_MIN)
+    rectangle.blit(image, rect)
 
     return surface.blit(rectangle, pos)

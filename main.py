@@ -1,3 +1,5 @@
+import os
+
 import pygame
 
 import modules.constants as c
@@ -22,6 +24,12 @@ def main():
     screen = pygame.display.set_mode(size)
     board_surf = screen.subsurface(board_rect)
 
+    # load bg
+    block_bg = pygame.transform.scale(
+        pygame.image.load(os.path.join('static', 'block_bg.png')),
+        board.get_block_size()
+    )
+
     # events
     pygame.time.set_timer(c.MOVEDOWN, speed)
     # TODO: move speed to game
@@ -40,9 +48,9 @@ def main():
             if not game.is_paused():
                 board_surf.fill(c.BLACK)
                 for coords in board.print_board():
-                    draw_rect(board_surf, get_board_color(board.get_fullness()), coords)
+                    draw_rect(board_surf, get_board_color(board.get_fullness()), coords, block_bg)
                 for coords in board.print_figure():
-                    draw_rect(board_surf, board.figure.get_color(), coords)
+                    draw_rect(board_surf, board.figure.get_color(), coords, block_bg)
             else:
                 write_end_text(screen, [myfont.render('Paused', 1, c.WHITE)], size)
 
