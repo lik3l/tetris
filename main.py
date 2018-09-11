@@ -15,14 +15,10 @@ pygame.key.set_repeat(300, 50)  # 300 pause before repeat
 
 def main():
     size = c.SCREEN_SIZE
-    speed = c.DEFAULT_SPEED
 
     board = Board(*size)
-    board_rect = pygame.Rect((size[0]//2 - board.get_pixel_size()[0]//2,
-                              0, *board.get_pixel_size()))
 
     screen = pygame.display.set_mode(size)
-    board_surf = screen.subsurface(board_rect)
 
     # load bg
     block_bg = pygame.transform.scale(
@@ -30,13 +26,12 @@ def main():
         board.get_block_size()
     )
 
-    # events
-    pygame.time.set_timer(c.MOVEDOWN, speed)
     # TODO: move speed to game
 
     myfont = pygame.font.SysFont("monospace", 16)
     end_game = EndGame(myfont, c.WHITE, size, screen, board)
     game = Game(board, pygame, screen, end_game)
+    game.run()  # Must contain all while loop
 
     while True:
         if game.get_state() == game.GAME_STATE:
@@ -46,11 +41,11 @@ def main():
 
             screen.fill(c.GRAY)
             if not game.is_paused():
-                board_surf.fill(c.BLACK)
+                game.board_surf.fill(c.BLACK)
                 for coords in board.print_board():
-                    draw_rect(board_surf, get_board_color(board.get_fullness()), coords, block_bg)
+                    draw_rect(game.board_surf, get_board_color(board.get_fullness()), coords, block_bg)
                 for coords in board.print_figure():
-                    draw_rect(board_surf, board.figure.get_color(), coords, block_bg)
+                    draw_rect(game.board_surf, board.figure.get_color(), coords, block_bg)
             else:
                 write_end_text(screen, [myfont.render('Paused', 1, c.WHITE)], size)
 

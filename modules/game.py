@@ -10,6 +10,9 @@ class Game:
         self.board = board
         self.pygame = pygame
         self.screen = screen
+        self.board_rect = pygame.Rect((self.screen.get_size()[0] // 2 - board.get_pixel_size()[0] // 2,
+                                       0, *board.get_pixel_size()))
+        self.board_surf = self.screen.subsurface(self.board_rect)
         self.end_game = end_game
         self.pause_state = False
         self.default_speed = c.DEFAULT_SPEED
@@ -25,6 +28,9 @@ class Game:
             return self.ENDGAME_STATE
         elif self.board.get_score_state():
             return self.SCORE_STATE
+
+    def get_board(self):
+        return self.board_surf
 
     def pause(self):
         self.pause_state = not self.pause_state
@@ -57,6 +63,9 @@ class Game:
 
     def get_round(self):
         return self.round
+
+    def run(self):
+        self.pygame.time.set_timer(c.MOVEDOWN, self.speed)
 
     def reset(self):
         self.board.reset_board()
