@@ -36,8 +36,7 @@ def input_handler(pygame, board):
     pressed = pygame.key.get_pressed()
     for k in pressed_keys_map:
         if pressed[k]:
-            if not pressed_keys_map[k]['wait'] \
-                    or pressed_keys_map[k]['count'] > 1 \
+            if pressed_keys_map[k]['count'] > 1 \
                     or not pressed_keys_map[k]['count']:
                 pressed_keys_map[k]['action'](board)
                 pygame.display.flip()

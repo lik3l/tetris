@@ -9,7 +9,7 @@ from modules.helpers import write_end_text, enter_player_name, draw_rect, get_bo
     get_not_scored
 
 pygame.init()
-pygame.key.set_repeat(400, 50)
+pygame.key.set_repeat(300, 50)
 
 speed = c.DEFAULT_SPEED
 
