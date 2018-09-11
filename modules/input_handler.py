@@ -1,6 +1,7 @@
 import sys
 
 from pygame import locals as c
+from modules import constants as const
 
 
 def left(board):
@@ -43,10 +44,12 @@ def input_handler(pygame, board):
             pressed_keys_map[k]['count'] += 1
 
 
-def input_up_handler(pygame):
+def input_up_handler(pygame, speed):
     pressed = pygame.key.get_pressed()
     for k in pressed_keys_map:
         if not pressed[k]:
+            if k == pygame.K_DOWN:
+                pygame.time.set_timer(const.MOVEDOWN, speed)
             pressed_keys_map[k]['count'] = 0
 
 

@@ -153,6 +153,9 @@ class Board:
         """ Moving figure bottom """
         if self.check_bottom():
             self.figure_position[1] += 1
+            return True
+        else:
+            return False
 
     def speed_down(self):
         """ Speeds figure down """

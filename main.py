@@ -1,6 +1,7 @@
 import sys
 
 import pygame
+from pygame.event import Event
 
 import modules.constants as c
 from modules.flow_handlers import game_flow_handler, score_flow_handler
@@ -31,6 +32,7 @@ def main():
 
     # events
     pygame.time.set_timer(c.MOVEDOWN, speed)
+    # TODO: move speed to game
 
     myfont = pygame.font.SysFont("monospace", 16)
     end_game = EndGame(myfont, c.WHITE, size, screen, board)
