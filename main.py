@@ -30,7 +30,7 @@ def main():
 
     myfont = pygame.font.SysFont("monospace", 16)
     end_game = EndGame(myfont, c.WHITE, size, screen, board)
-    game = Game(board, pygame, screen)
+    game = Game(board, pygame, screen, end_game)
 
     while True:
         if game.get_state() == game.GAME_STATE:
@@ -73,7 +73,7 @@ def main():
 
             end_game.draw()
             for event in pygame.event.get():
-                end_game_state_handler(end_game, event, pygame, reset, game)
+                end_game_state_handler(event, pygame, reset, game)
             pygame.display.flip()
         else:
             # TODO: Add watch score screen in menu

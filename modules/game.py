@@ -6,13 +6,16 @@ class Game:
     SCORE_STATE = 2
     ENDGAME_STATE = 3
 
-    def __init__(self, board, pygame, screen):
+    def __init__(self, board, pygame, screen, end_game):
         self.board = board
         self.pygame = pygame
         self.screen = screen
+        self.end_game = end_game
         self.pause_state = False
         self.default_speed = c.DEFAULT_SPEED
         self.speed = self.default_speed
+        # Needed to break keypress repeat
+        self.k_down_pressed = False
 
     def get_state(self):
         if self.board.get_game_state():
@@ -27,6 +30,15 @@ class Game:
 
     def is_paused(self):
         return self.pause_state
+
+    def press_down(self):
+        self.k_down_pressed = True
+
+    def up_down(self):
+        self.k_down_pressed = False
+
+    def pressed_down(self):
+        return self.k_down_pressed
 
     def get_speed(self):
         return self.speed
