@@ -1,7 +1,4 @@
-import sys
-
 import pygame
-from pygame.event import Event
 
 import modules.constants as c
 from modules.flow_handlers import game_flow_handler, score_flow_handler
@@ -14,11 +11,8 @@ from modules.helpers import write_end_text, enter_player_name, draw_rect, get_bo
 pygame.init()
 pygame.key.set_repeat(300, 50)  # 300 pause before repeat
 
-speed = c.DEFAULT_SPEED
-
 
 def main():
-    global speed
     size = c.SCREEN_SIZE
     speed = c.DEFAULT_SPEED
     g_round = 1
@@ -42,7 +36,7 @@ def main():
         if game.get_state() == game.GAME_STATE:
             """ Game running state """
             for event in pygame.event.get():
-                game_flow_handler(event, pygame, board, game, speed)
+                game_flow_handler(event, pygame, board, game)
 
             screen.fill(c.GRAY)
             if not game.is_paused():
@@ -79,20 +73,17 @@ def main():
 
             end_game.draw()
             for event in pygame.event.get():
-                end_game_state_handler(end_game, event, pygame, reset)
+                end_game_state_handler(end_game, event, pygame, reset, game)
             pygame.display.flip()
         else:
             # TODO: Add watch score screen in menu
             break
 
 
-def reset(board):
-    global speed
+def reset(board, game):
     board.reset_board()
-    pygame.time.set_timer(c.MOVEDOWN, c.DEFAULT_SPEED)
-    speed = c.DEFAULT_SPEED
-
-    return c.DEFAULT_SPEED
+    game.set_default_speed()
+    pygame.time.set_timer(c.MOVEDOWN, game.get_speed())
 
 
 if __name__ == '__main__':

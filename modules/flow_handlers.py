@@ -6,19 +6,19 @@ from modules.input_handler import input_handler, input_up_handler
 k_down_pressed = False
 
 
-def game_flow_handler(event, pygame, board, game, speed):
+def game_flow_handler(event, pygame, board, game):
     global k_down_pressed
     if event.type == pygame.QUIT:
         sys.exit()
     if event.type == c.MOVEDOWN:
         if not board.move_figure():
-            pygame.time.set_timer(c.MOVEDOWN, speed)
+            pygame.time.set_timer(c.MOVEDOWN, game.speed)
     elif event.type == pygame.KEYDOWN:
         if event.key == pygame.K_ESCAPE:
             if not game.is_paused():
                 pygame.time.set_timer(c.MOVEDOWN, 0)
             else:
-                pygame.time.set_timer(c.MOVEDOWN, speed)
+                pygame.time.set_timer(c.MOVEDOWN, game.speed)
             game.pause()
         elif event.key == pygame.K_DOWN:
             if not k_down_pressed:
@@ -29,7 +29,7 @@ def game_flow_handler(event, pygame, board, game, speed):
     if event.type == pygame.KEYUP and not game.is_paused():
         if event.key == pygame.K_DOWN:
             k_down_pressed = False
-        input_up_handler(pygame, speed)
+        input_up_handler(pygame, game.speed)
 
 
 def score_flow_handler(event, pygame, board):

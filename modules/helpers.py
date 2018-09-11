@@ -118,11 +118,11 @@ class EndGame:
             for idx, text in enumerate(self.options)
         ]
 
-    def submit(self, reset):
+    def submit(self, reset, game):
         if self.selected == 2:
             sys.exit()
         elif self.selected == 0:
-            reset(self.board)
+            reset(self.board, game)
 
     def draw(self):
         text_list = self.get_options()
