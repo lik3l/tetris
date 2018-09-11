@@ -48,7 +48,7 @@ def main():
 
             scoretext = myfont.render(board.score.get_score(), 1, c.WHITE)
             screen.blit(scoretext, (5, 10))
-            if board.score.get_int_score() >= 10 * game.get_round():
+            if board.score.get_int_score() >= 100 * game.get_round():
                 game.next_round()
             pygame.display.flip()
         elif game.get_state() == game.SCORE_STATE:
