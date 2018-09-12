@@ -64,7 +64,7 @@ class Game:
     def get_round(self):
         return self.round
 
-    def start(self):
+    def init_timer(self):
         self.pygame.time.set_timer(c.MOVEDOWN, self.speed)
 
     def game_flow(self):

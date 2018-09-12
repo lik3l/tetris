@@ -31,7 +31,7 @@ def main():
     myfont = pygame.font.SysFont("monospace", 16)
     end_game = EndGame(myfont, c.WHITE, size, screen, board)
     game = Game(board, pygame, screen, end_game)
-    game.start()  # Must contain all while loop
+    game.init_timer()
     screen.fill(c.GRAY)
     while True:
         if game.get_state() == game.GAME_STATE:
