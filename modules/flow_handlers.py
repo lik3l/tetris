@@ -5,9 +5,8 @@ from modules import constants as c
 def game_flow_handler(event, game):
     if event.type == game.pygame.QUIT:
         sys.exit()
-    if event.type == c.MOVEDOWN:
-        if not game.board.move_figure():
-            game.pygame.time.set_timer(c.MOVEDOWN, game.speed)
+    elif event.type > c.USEREVENT:
+        game.do_event(event.type)
     elif event.type == game.pygame.KEYDOWN:
         if event.key == game.pygame.K_ESCAPE:
             if not game.is_paused():
@@ -17,8 +16,8 @@ def game_flow_handler(event, game):
             game.pause()
         elif event.key in game.keymap.get_keys() and not game.is_paused():
             game.key_down(event.key)
-    if event.type == game.pygame.KEYUP and not game.is_paused():
-        game.key_up(event.key)
+    elif event.type == game.pygame.KEYUP and not game.is_paused():
+        game.stop_action(event.key)
 
 
 def score_flow_handler(event, game):

@@ -10,6 +10,7 @@ class KeyMap:
     DOWN = c.K_DOWN, c.K_s
     R_RIGHT = c.K_SPACE, c.K_e
     R_LEFT = c.K_LEFT, c.K_q
+    # do not modify order
     KEYS = [LEFT, RIGHT, DOWN, R_RIGHT, R_LEFT]
     ACTIONS = const.MOVE_ACTIONS
 

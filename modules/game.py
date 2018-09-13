@@ -54,36 +54,81 @@ class Game:
 
     def do_action(self, action):
         if action == c.LEFT:
+            self._left_event()
             self._move_left()
         elif action == c.RIGHT:
+            self._right_event()
             self._move_right()
         elif action == c.DOWN:
             self._move_down()
         elif action == c.R_RIGHT:
+            self._r_right_event()
             self._rotate_right()
         elif action == c.R_LEFT:
+            self._r_left_event()
             self._rotate_left()
 
-    def stop_action(self, action):
-        pass
+    def do_event(self, event):
+        if event == c.MOVEDOWN:
+            self._down_event()
+        elif event == c.MOVELEFT:
+            self._left_event()
+        elif event == c.MOVERIGHT:
+            self._right_event()
+        elif event == c.ROTATERIGHT:
+            self._r_right_event()
+        elif event == c.ROTATELEFT:
+            self._r_left_event()
+
+    def stop_action(self, key):
+        action = self.keymap.get_action(key)
+        for a, event, speed in zip(self.keymap.ACTIONS, c.EVENTS, self._get_event_def_speed()):
+            if action == a:
+                self.pygame.time.set_timer(event, speed)
+                self.keymap.leave_key(key)
+                return
 
     def _move_left(self):
-        self.board.figure_left()
+        self.pygame.time.set_timer(c.MOVELEFT, c.DEFAULT_EVENT_TIMER)
 
     def _move_right(self):
-        self.board.figure_right()
+        self.pygame.time.set_timer(c.MOVERIGHT, c.DEFAULT_EVENT_TIMER)
 
     def _move_down(self):
-        self.board.speed_down()
+        self.pygame.time.set_timer(c.MOVEDOWN, c.FAST_EVENT_TIMER)
 
     def _rotate_left(self):
-        self.board.rotate_left()
+        self.pygame.time.set_timer(c.ROTATELEFT, c.DEFAULT_EVENT_TIMER)
 
     def _rotate_right(self):
+        self.pygame.time.set_timer(c.ROTATERIGHT, c.DEFAULT_EVENT_TIMER)
+
+    def _left_event(self):
+        self.board.figure_left()
+
+    def _right_event(self):
+        self.board.figure_right()
+
+    def _r_right_event(self):
         self.board.rotate_right()
+
+    def _r_left_event(self):
+        self.board.rotate_left()
+
+    def _down_event(self):
+        if not self.board.move_figure():
+            self._clear_events(c.MOVEDOWN)
+
+    def _clear_events(self, e=None):
+        for event, speed in zip(c.EVENTS, self._get_event_def_speed()):
+            if not e or e == event:
+                self.pygame.time.set_timer(event, speed)
 
     def get_speed(self):
         return self.speed
+
+    def _get_event_def_speed(self):
+        return [0, 0, self.get_speed(), 0, 0]
 
     def set_speed(self, speed):
         self.speed = speed
@@ -160,5 +205,5 @@ class Game:
         self.screen.fill(c.GRAY)
         self.board.reset_board()
         self.set_default_speed()
+        self._clear_events()
         self.round = 1
-        self.pygame.time.set_timer(c.MOVEDOWN, self.speed)
