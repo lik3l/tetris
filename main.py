@@ -24,8 +24,6 @@ def main():
         board.get_block_size()
     )
 
-    # TODO: move speed to game
-
     myfont = pygame.font.SysFont("monospace", 16)
     end_game = EndGame(myfont, c.WHITE, size, screen, board)
     game = Game(board, pygame, screen, end_game, block_bg, myfont)

@@ -75,7 +75,7 @@ class Game:
     def _gameplay_flow(self):
         """ Game running state """
         for event in self.pygame.event.get():
-            game_flow_handler(event, self.pygame, self.board, self)
+            game_flow_handler(event, self)
 
         if not self.is_paused():
             self.board_surf.fill(c.BLACK)
@@ -103,7 +103,7 @@ class Game:
         write_end_text(self.screen, text, self.screen.get_size())
 
         for event in self.pygame.event.get():
-            score_flow_handler(event, self.pygame, self.board)
+            score_flow_handler(event, self)
 
         self.pygame.display.flip()
 
@@ -112,7 +112,7 @@ class Game:
 
         self.end_game.draw()
         for event in self.pygame.event.get():
-            end_game_state_handler(event, self.pygame, self)
+            end_game_state_handler(event, self)
         self.pygame.display.flip()
 
     def flow(self):

@@ -3,39 +3,39 @@ from modules import constants as c
 from modules.input_handler import input_handler, input_up_handler
 
 
-def game_flow_handler(event, pygame, board, game):
-    if event.type == pygame.QUIT:
+def game_flow_handler(event, game):
+    if event.type == game.pygame.QUIT:
         sys.exit()
     if event.type == c.MOVEDOWN:
-        if not board.move_figure():
-            pygame.time.set_timer(c.MOVEDOWN, game.speed)
-    elif event.type == pygame.KEYDOWN:
-        if event.key == pygame.K_ESCAPE:
+        if not game.board.move_figure():
+            game.pygame.time.set_timer(c.MOVEDOWN, game.speed)
+    elif event.type == game.pygame.KEYDOWN:
+        if event.key == game.pygame.K_ESCAPE:
             if not game.is_paused():
-                pygame.time.set_timer(c.MOVEDOWN, 0)
+                game.pygame.time.set_timer(c.MOVEDOWN, 0)
             else:
-                pygame.time.set_timer(c.MOVEDOWN, game.speed)
+                game.pygame.time.set_timer(c.MOVEDOWN, game.speed)
             game.pause()
-        elif event.key == pygame.K_DOWN:
+        elif event.key == game.pygame.K_DOWN:
             if not game.pressed_down():
-                pygame.time.set_timer(c.MOVEDOWN, 20)
+                game.pygame.time.set_timer(c.MOVEDOWN, 20)
             game.press_down()
         elif not game.is_paused():
-            input_handler(pygame, board)
-    if event.type == pygame.KEYUP and not game.is_paused():
-        if event.key == pygame.K_DOWN:
+            input_handler(game.pygame, game.board)
+    if event.type == game.pygame.KEYUP and not game.is_paused():
+        if event.key == game.pygame.K_DOWN:
             game.up_down()
-        input_up_handler(pygame, game.speed)
+        input_up_handler(game.pygame, game.speed)
 
 
-def score_flow_handler(event, pygame, board):
-    if event.type == pygame.QUIT:
+def score_flow_handler(event, game):
+    if event.type == game.pygame.QUIT:
         sys.exit()
-    elif event.type == pygame.KEYDOWN:
-        if event.key == pygame.K_RETURN:
-            board.score.write_top_score()
-            board.end_score_state()
-            board.set_end_game()
-        elif board.score.check_score():
-            key = str(event.unicode) if not event.key == pygame.K_BACKSPACE else 'BACKSPACE'
-            board.score.update_player_name(key)
+    elif event.type == game.pygame.KEYDOWN:
+        if event.key == game.pygame.K_RETURN:
+            game.board.score.write_top_score()
+            game.board.end_score_state()
+            game.board.set_end_game()
+        elif game.board.score.check_score():
+            key = str(event.unicode) if not event.key == game.pygame.K_BACKSPACE else 'BACKSPACE'
+            game.board.score.update_player_name(key)
