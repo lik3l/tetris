@@ -81,9 +81,8 @@ class EndGame:
         self.size = size
         self.color = color
         self.dark_color = c.BLACK
-        self.options = [
-            'Restart', '', 'Exit'
-        ]
+        self.options = [k for k in dict(c.START_MENU).keys()]
+        self.actions = [k for k in dict(c.START_MENU).values()]
         self.selected = 0
 
     def move_up(self):
@@ -112,11 +111,25 @@ class EndGame:
             for idx, text in enumerate(self.options)
         ]
 
+    def get_action(self):
+        return self.actions[self.selected]
+
     def submit(self, game):
-        if self.selected == 2:
+        if self.get_action() == c.EXIT:
             sys.exit()
-        elif self.selected == 0:
+        elif self.get_action() == c.RESTART:
             game.reset()
+        elif self.get_action() == c.START:
+            game.reset()
+            self.set_menu()
+
+    def set_menu(self, options=None, actions=None):
+        if options and actions:
+            self.options = options
+            self.actions = actions
+        else:
+            self.options = [k for k in dict(c.RESTART_MENU).keys()]
+            self.actions = [k for k in dict(c.RESTART_MENU).values()]
 
     def draw(self):
         text_list = self.get_options()

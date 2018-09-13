@@ -22,7 +22,7 @@ class Board:
                            self.height * self.pixel_ratio)
         self.board = [[]]
         self._set_board()
-        self.state = True
+        self.state = False
 
         self.figure = Figure(Figure.get_random())
         self.starting_position = (int(self.width / 2) - int(self.figure.get_sprite_size() / 2),
@@ -31,7 +31,7 @@ class Board:
 
         self.score = Score()
         self.score_state = False
-        self.end_game_state = False
+        self.end_game_state = True
 
     def __str__(self):
         return '\n'.join(str(x) for x in self.board)

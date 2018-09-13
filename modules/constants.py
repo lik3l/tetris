@@ -36,6 +36,15 @@ R_RIGHT = 3
 R_LEFT = 4
 MOVE_ACTIONS = [LEFT, RIGHT, DOWN, R_RIGHT, R_LEFT]
 
+# Actions
+START = 0
+RESTART = 1
+EXIT = 2
+
+START_MENU = [('Start', START), ('', None), ('Exit', EXIT)]
+RESTART_MENU = [('Restart', RESTART), ('', None), ('Exit', EXIT)]
+
+
 DEFAULT_SPEED = 1000
 
 COLORS = (
