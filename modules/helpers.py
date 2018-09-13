@@ -120,7 +120,7 @@ class EndGame:
         elif self.get_action() == c.RESTART:
             game.reset()
         elif self.get_action() == c.START:
-            game.reset()
+            game.start()
             self.set_menu()
 
     def set_menu(self, options=None, actions=None):

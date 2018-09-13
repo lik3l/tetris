@@ -7,16 +7,16 @@ from modules.input_handler import end_game_state_handler, KeyMap
 class Game:
     GAME_STATE = 0
     SCORE_STATE = 2
-    ENDGAME_STATE = 3
+    MENU = 3
 
-    def __init__(self, board, pygame, screen, end_game, block_bg, myfont):
+    def __init__(self, board, pygame, screen, menu, block_bg, myfont):
         self.board = board
         self.pygame = pygame
         self.screen = screen
         self.board_rect = pygame.Rect((self.screen.get_size()[0] // 2 - board.get_pixel_size()[0] // 2,
                                        0, *board.get_pixel_size()))
         self.board_surf = self.screen.subsurface(self.board_rect)
-        self.end_game = end_game
+        self.menu = menu
         self.pause_state = False
         self.default_speed = c.DEFAULT_SPEED
         self.speed = self.default_speed
@@ -29,7 +29,7 @@ class Game:
         if self.board.get_game_state():
             return self.GAME_STATE
         elif self.board.get_end_game_state():
-            return self.ENDGAME_STATE
+            return self.MENU
         elif self.board.get_score_state():
             return self.SCORE_STATE
 
@@ -188,7 +188,7 @@ class Game:
     def _menu_flow(self):
         self.screen.fill(c.BLACK)
 
-        self.end_game.draw()
+        self.menu.draw()
         for event in self.pygame.event.get():
             end_game_state_handler(event, self)
         self.pygame.display.flip()
@@ -198,7 +198,7 @@ class Game:
             self._gameplay_flow()
         elif self.get_state() == self.SCORE_STATE:
             self._score_flow()
-        elif self.get_state() == self.ENDGAME_STATE:
+        elif self.get_state() == self.MENU:
             self._menu_flow()
 
     def reset(self):
@@ -207,3 +207,7 @@ class Game:
         self.set_default_speed()
         self._clear_events()
         self.round = 1
+
+    def start(self):
+        self.menu.set_menu()
+        self.reset()

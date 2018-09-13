@@ -44,9 +44,9 @@ def end_game_state_handler(event, game):
         sys.exit()
     elif event.type == game.pygame.KEYDOWN:
         if event.key == game.pygame.K_UP:
-            game.end_game.move_up()
+            game.menu.move_up()
         elif event.key == game.pygame.K_DOWN:
-            game.end_game.move_down()
+            game.menu.move_down()
         elif event.key == game.pygame.K_RETURN:
             game.clear_input()
-            game.end_game.submit(game)
+            game.menu.submit(game)
