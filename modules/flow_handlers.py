@@ -1,6 +1,5 @@
 import sys
 from modules import constants as c
-from modules.input_handler import input_handler, input_up_handler
 
 
 def game_flow_handler(event, game):
@@ -16,14 +15,10 @@ def game_flow_handler(event, game):
             else:
                 game.pygame.time.set_timer(c.MOVEDOWN, game.speed)
             game.pause()
-        elif event.key in game.keymap.get_keys():
+        elif event.key in game.keymap.get_keys() and not game.is_paused():
             game.key_down(event.key)
-        elif not game.is_paused():
-            input_handler(game.pygame, game.board)
     if event.type == game.pygame.KEYUP and not game.is_paused():
-        if event.key == game.pygame.K_DOWN:
-            game.up_down()
-        input_up_handler(game.pygame, game.speed)
+        game.key_up(event.key)
 
 
 def score_flow_handler(event, game):

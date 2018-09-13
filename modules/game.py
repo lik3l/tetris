@@ -43,14 +43,14 @@ class Game:
         return self.pause_state
 
     def key_down(self, key):
-        if key in self.keymap.get_keys():
+        if key in self.keymap.get_keys() and key not in self.keymap.get_preseed():
+            self.keymap.press_key(key)
             self.do_action(self.keymap.get_action(key))
 
-    def key_up(self):
-        pass
-
-    def is_holding(self):
-        return False
+    def key_up(self, key):
+        if key in self.keymap.get_keys():
+            self.keymap.leave_key(key)
+            self.stop_action(self.keymap.get_action(key))
 
     def do_action(self, action):
         if action == c.LEFT:
@@ -63,6 +63,9 @@ class Game:
             self._rotate_right()
         elif action == c.R_LEFT:
             self._rotate_left()
+
+    def stop_action(self, action):
+        pass
 
     def _move_left(self):
         self.board.figure_left()
@@ -95,6 +98,9 @@ class Game:
 
     def get_round(self):
         return self.round
+
+    def clear_input(self):
+        self.keymap.clear_pressed()
 
     def init_timer(self):
         self.pygame.time.set_timer(c.MOVEDOWN, self.speed)
