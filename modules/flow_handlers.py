@@ -16,10 +16,8 @@ def game_flow_handler(event, game):
             else:
                 game.pygame.time.set_timer(c.MOVEDOWN, game.speed)
             game.pause()
-        elif event.key == game.pygame.K_DOWN:
-            if not game.pressed_down():
-                game.pygame.time.set_timer(c.MOVEDOWN, 20)
-            game.press_down()
+        elif event.key in game.keymap.get_keys():
+            game.key_down(event.key)
         elif not game.is_paused():
             input_handler(game.pygame, game.board)
     if event.type == game.pygame.KEYUP and not game.is_paused():

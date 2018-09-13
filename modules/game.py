@@ -1,7 +1,7 @@
 from modules import constants as c
 from modules.flow_handlers import game_flow_handler, score_flow_handler
 from modules.helpers import draw_rect, get_board_color, write_end_text, get_not_scored, enter_player_name
-from modules.input_handler import end_game_state_handler
+from modules.input_handler import end_game_state_handler, KeyMap
 
 
 class Game:
@@ -20,11 +20,10 @@ class Game:
         self.pause_state = False
         self.default_speed = c.DEFAULT_SPEED
         self.speed = self.default_speed
-        # Needed to break keypress repeat
-        self.k_down_pressed = False
         self.round = 1
         self.block_bg = block_bg
         self.font = myfont
+        self.keymap = KeyMap()
 
     def get_state(self):
         if self.board.get_game_state():
@@ -43,14 +42,42 @@ class Game:
     def is_paused(self):
         return self.pause_state
 
-    def press_down(self):
-        self.k_down_pressed = True
+    def key_down(self, key):
+        if key in self.keymap.get_keys():
+            self.do_action(self.keymap.get_action(key))
 
-    def up_down(self):
-        self.k_down_pressed = False
+    def key_up(self):
+        pass
 
-    def pressed_down(self):
-        return self.k_down_pressed
+    def is_holding(self):
+        return False
+
+    def do_action(self, action):
+        if action == c.LEFT:
+            self._move_left()
+        elif action == c.RIGHT:
+            self._move_right()
+        elif action == c.DOWN:
+            self._move_down()
+        elif action == c.R_RIGHT:
+            self._rotate_right()
+        elif action == c.R_LEFT:
+            self._rotate_left()
+
+    def _move_left(self):
+        self.board.figure_left()
+
+    def _move_right(self):
+        self.board.figure_right()
+
+    def _move_down(self):
+        self.board.speed_down()
+
+    def _rotate_left(self):
+        self.board.rotate_left()
+
+    def _rotate_right(self):
+        self.board.rotate_right()
 
     def get_speed(self):
         return self.speed

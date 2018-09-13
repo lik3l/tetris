@@ -24,6 +24,37 @@ def r_left(board):
     board.rotate_left()
 
 
+class KeyMap:
+    LEFT = (c.K_LEFT, c.K_a)
+    RIGHT = (c.K_RIGHT, c.K_d)
+    DOWN = c.K_DOWN, c.K_s
+    R_RIGHT = c.K_SPACE, c.K_e
+    R_LEFT = c.K_LEFT, c.K_q
+    KEYS = [LEFT, RIGHT, DOWN, R_RIGHT, R_LEFT]
+    ACTIONS = const.MOVE_ACTIONS
+
+    def __init__(self):
+        self.keys = [k[0] for k in self.KEYS]
+        self.key_hold = set()
+
+    def get_keys(self):
+        return self.keys
+
+    def get_preseed(self):
+        return self.key_hold
+
+    def get_action(self, key):
+        for k, action in zip(self.keys, self.ACTIONS):
+            if k == key:
+                return action
+
+    def press_key(self, key):
+        self.key_hold.add(key)
+
+    def leave_key(self, key):
+        self.key_hold.remove(key)
+
+
 pressed_keys_map = {
     c.K_LEFT: {'count': 0, 'action': left, 'wait': True},
     c.K_RIGHT: {'count': 0, 'action': right, 'wait': True},
